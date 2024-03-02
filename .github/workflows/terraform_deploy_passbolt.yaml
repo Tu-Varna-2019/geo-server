@@ -1,0 +1,92 @@
+name: terraform_deploy_passbolt
+#description: "Deploy Terraform After Infra"
+
+on:
+  push:
+    branches:
+      - none
+
+  workflow_dispatch:
+    inputs:
+      app:
+        type: choice
+        description: |
+          App to be deployed on 12 months free.
+        options:
+          - passbolt
+          - vpn
+        required: true
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    if: github.repository != 'hashicorp-education/learn-terraform-github-actions'
+    name: "Terraform Plan"
+    permissions:
+      contents: read
+      pull-requests: write
+
+    env:
+      terraform_main_file_path: "./terraform/apps/12_months_free/${{ inputs.app }}"
+      terraform_var_common_file: "../../../envs/prod/common/env.tfvars"
+      terraform_var_app_file: "../../../envs/prod/app/12_months_free/${{ inputs.app }}/env.tfvars"
+      # Terraform secrets
+      TF_CLOUD_ORGANIZATION: ${{ secrets.TF_ORG }}
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_WORKSPACE: "passbolt"
+      # runs:
+      #   using: "composite"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Install the latest version of Terraform CLI
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          # terraform_version: "1.1.7"
+
+      # Run Terraform init
+      # Setup connection to Azure + setup backend to use SA where we store Statefile
+      - name: Terraform Init
+        id: init
+        shell: bash
+        run: | # Folded Block Scalar ">" which converts new lines into spaces
+          terraform -chdir="${{ env.terraform_main_file_path }}" init
+
+      # Run a Terraform validate
+      - name: Terraform validate
+        id: validate
+        if: success() || failure()
+        shell: bash
+        run: terraform validate -no-color
+
+      # Run a Terraform plan
+      - name: Terraform plan
+        id: plan
+        shell: bash
+        run: |
+          terraform -chdir="${{ env.terraform_main_file_path }}" plan \
+            -no-color \
+            -input=false \
+            -var-file="${{ env.terraform_var_common_file }}" \
+            -var-file="${{ env.terraform_var_app_file }}"
+
+      - name: Archive Lambda Deployment Package
+        run: |
+          zip -r src/lambda/lambda_deployment_package.zip src/lambda/SendGridMessage
+
+      # Run a Terraform apply
+      - name: Terraform apply
+        id: apply
+        if: success()
+        shell: bash
+        run: |
+          terraform -chdir="${{ env.terraform_main_file_path }}" \
+          apply \
+          -auto-approve \
+          -input=false \
+          -var-file="${{ env.terraform_var_common_file }}" \
+          -var-file="${{ env.terraform_var_app_file }}"
