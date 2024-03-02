@@ -5,7 +5,8 @@ FROM bellsoft/liberica-openjdk-alpine:18
 WORKDIR /usr/src/myapp
 
 # Copy the compiled JAR file from the target directory to the container
-COPY /geo/target/geo-0.0.1-SNAPSHOT.jar.original /usr/src/myapp/geo.jar
+COPY /geo/target/geo-0.0.1-SNAPSHOT.jar /usr/src/myapp/geo.jar
 
 # Command to run the application when the container starts
-CMD ["java", "-cp", "geo-0.0.1-SNAPSHOT.jar.original", "com.tuvarna.geo.Main"]
+CMD ["java", "-jar", "geo.jar"]
+
