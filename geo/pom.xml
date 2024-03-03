@@ -16,6 +16,7 @@
 	<description>Tu-Varna project for for georaphic web app in Spring Boot</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<start-class>com.tuvarna.geo.Main</start-class>
 		<java.version>18</java.version>
 		<lombok.version>1.18.30</lombok.version>
 		<log4jdbc.log4j2.version>1.16</log4jdbc.log4j2.version>
@@ -78,11 +79,27 @@
 
 
 	<build>
-
 		<plugins>
 			<plugin>
+
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.2.3</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.8.RELEASE</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
