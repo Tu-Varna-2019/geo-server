@@ -21,6 +21,7 @@
 		<lombok.version>1.18.30</lombok.version>
 		<log4jdbc.log4j2.version>1.16</log4jdbc.log4j2.version>
 		<rest.assured.version>2.3.3</rest.assured.version>
+		<spring-boot-devtools.version>3.2.3</spring-boot-devtools.version>
 		<sonar.java.binaries>geo/target/classes/com/tuvarna/geo</sonar.java.binaries>
 	</properties>
 	<dependencies>
@@ -75,6 +76,15 @@
 			<version>${rest.assured.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<version>${spring-boot-devtools.version}</version>
+			<optional>true</optional>
+		</dependency>
+
 	</dependencies>
 
 
@@ -91,6 +101,7 @@
 						<artifactId>springloaded</artifactId>
 						<version>1.2.8.RELEASE</version>
 					</dependency>
+
 				</dependencies>
 				<configuration>
 					<excludes>
@@ -99,6 +110,14 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludeDevtools>false</excludeDevtools>
 				</configuration>
 			</plugin>
 		</plugins>
