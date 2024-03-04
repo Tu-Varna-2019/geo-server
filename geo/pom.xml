@@ -22,7 +22,7 @@
 		<log4jdbc.log4j2.version>1.16</log4jdbc.log4j2.version>
 		<rest.assured.version>2.3.3</rest.assured.version>
 		<spring-boot-devtools.version>3.2.3</spring-boot-devtools.version>
-		<sonar.java.binaries>geo/target/classes/com/tuvarna/geo</sonar.java.binaries>
+
 	</properties>
 	<dependencies>
 		<dependency>
