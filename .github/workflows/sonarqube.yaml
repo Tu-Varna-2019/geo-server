@@ -42,7 +42,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
           cd geo
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Tu-Varna-2019_Masters-Summer-Project-IMD-Java-WebServer-Geo-System_AY4J6ARKYmNxNLY6TIyY
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
