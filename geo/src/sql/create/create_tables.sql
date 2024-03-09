@@ -1,0 +1,27 @@
+
+CREATE TABLE
+IF NOT EXISTS "User"
+(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR
+(255) NOT NULL,
+    email VARCHAR
+(255) NOT NULL,
+    password VARCHAR
+(255) NOT NULL
+)
+
+
+CREATE TABLE
+IF NOT EXISTS "UserType"
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR
+(255) NOT NULL,
+    type VARCHAR
+(255) NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY
+(user_id) REFERENCES "User"
+(id)
+);
