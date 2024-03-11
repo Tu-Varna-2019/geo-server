@@ -1,24 +1,30 @@
 
 package com.tuvarna.geo.repository;
 
+import org.springframework.stereotype.Repository;
 import com.tuvarna.geo.entity.User;
 
+@Repository
 public class UserRepository implements DAORepository<User> {
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void save(User object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    public void save(User user) {
+        String sql = "INSERT INTO user (username, email, password, is_blocked, user_type) VALUES (?, ?, ?, ?, ?)";
+
+        geoDBConfig.executeSql(sql, null, user.getUsername(), user.getEmail(), user.getPassword(), user.isBlocked(),
+                user.getUserType().toString());
+
     }
 
     @Override
-    public void update(User object) {
+    public void update(User user) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public void delete(User object) {
+    public void delete(User user) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
@@ -37,8 +43,7 @@ public class UserRepository implements DAORepository<User> {
 
     @Override
     public void verify(String email, String password) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'verify'");
+        // geoDBConfig.loadSqlFile("geo/src/sql/read/get_user.sql");
     }
 
 }

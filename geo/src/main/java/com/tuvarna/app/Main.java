@@ -2,12 +2,12 @@ package com.tuvarna.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
-
-import com.tuvarna.geo.config.GeoDBConfig;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@Import(GeoDBConfig.class)
+@ComponentScan("com.tuvarna.geo")
+@EnableJpaRepositories(basePackages = "com.tuvarna.geo.repository")
 public class Main {
 
 	public static void main(String[] args) {

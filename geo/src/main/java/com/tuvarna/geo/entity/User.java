@@ -1,6 +1,6 @@
 package com.tuvarna.geo.entity;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,20 +30,29 @@ public class User {
     private boolean isBlocked;
 
     @Column(nullable = false, unique = true)
+    @JsonIgnore
     private UserType userType;
+
+    @Column(nullable = false, unique = true)
+    private String type;
 
     public User() {
     }
 
-    public User(String username, String password, UserType userType) {
+    public User(String email, String username, String password, String type) {
+        this.email = email;
         this.username = username;
         this.password = password;
         this.isBlocked = false;
-        this.userType = userType;
+        this.type = type;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void setUsername(String username) {
@@ -66,4 +75,19 @@ public class User {
         this.isBlocked = isBlocked;
     }
 
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
