@@ -1,17 +1,8 @@
 package com.tuvarna.geo.service;
 
-import com.tuvarna.geo.entity.User;
+import com.tuvarna.geo.service.dto.UserDTO;
 
-public class UserService {
+public interface UserService {
 
-    private User user;
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
+    void registerUser(UserDTO user);
 }

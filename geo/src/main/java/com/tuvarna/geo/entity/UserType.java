@@ -1,15 +1,14 @@
 package com.tuvarna.geo.entity;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@EntityScan
-@Table(name = "UserType")
+@Entity
+@Table(name = "\"usertype\"")
 public class UserType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

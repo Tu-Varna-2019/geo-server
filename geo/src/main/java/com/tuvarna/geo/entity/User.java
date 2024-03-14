@@ -1,16 +1,17 @@
 package com.tuvarna.geo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User {
 
     @Id
@@ -26,33 +27,25 @@ public class User {
     @Column(nullable = false, unique = true)
     private String password;
 
-    @Column(nullable = false, unique = true)
-    private boolean isBlocked;
+    @Column(nullable = false)
+    private boolean isblocked;
 
-    @Column(nullable = false, unique = true)
-    @JsonIgnore
-    private UserType userType;
-
-    @Column(nullable = false, unique = true)
-    private String type;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usertype", nullable = false)
+    private UserType usertype;
 
     public User() {
     }
 
-    public User(String email, String username, String password, String type) {
+    public User(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.isBlocked = false;
-        this.type = type;
+        this.isblocked = false;
     }
 
     public String getUsername() {
         return username;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public void setUsername(String username) {
@@ -67,20 +60,20 @@ public class User {
         this.password = password;
     }
 
-    public boolean isBlocked() {
-        return isBlocked;
+    public boolean isblocked() {
+        return isblocked;
     }
 
-    public void setisBlocked(boolean isBlocked) {
-        this.isBlocked = isBlocked;
+    public void setisblocked(boolean isblocked) {
+        this.isblocked = isblocked;
     }
 
     public UserType getUserType() {
-        return userType;
+        return usertype;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setUserType(UserType usertype) {
+        this.usertype = usertype;
     }
 
     public String getEmail() {

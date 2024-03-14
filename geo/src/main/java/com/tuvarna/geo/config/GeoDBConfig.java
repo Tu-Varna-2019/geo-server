@@ -18,8 +18,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import jakarta.annotation.PostConstruct;
-
 @Configuration
 public class GeoDBConfig<T> {
 
