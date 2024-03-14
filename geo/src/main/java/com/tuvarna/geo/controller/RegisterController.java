@@ -8,40 +8,27 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tuvarna.geo.entity.User;
-import com.tuvarna.geo.repository.UserRepository;
-import com.tuvarna.geo.repository.UserTypeRepository;
+import com.tuvarna.geo.service.UserService;
+import com.tuvarna.geo.service.dto.UserDTO;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class RegisterController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private UserTypeRepository userTypeRepository;
+    public RegisterController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> create(@RequestBody User user) {
-        String bodyResponse = "User registered successfully";
-        HttpStatus httpStatus = HttpStatus.CREATED;
+    public ResponseEntity<String> create(@RequestBody UserDTO user) {
 
-        try {
-
-            // Set the user type
-            user.setUserType(
-                    userTypeRepository.findByType(user.getType()));
-
-            userRepository.save(user);
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            bodyResponse = "User registration failed";
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-
-        }
-        return new ResponseEntity<>(bodyResponse, httpStatus);
+        // TODO: Return User object ?
+        userService.registerUser(user);
+        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
 }
