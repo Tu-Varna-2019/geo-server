@@ -1,5 +1,7 @@
 package com.tuvarna.geo.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserDTO {
     private String username;
     private String email;
@@ -31,11 +33,13 @@ public class UserDTO {
         this.password = password;
     }
 
-    public Boolean getIsblocked() {
+    @JsonProperty("isblocked")
+    public Boolean getIsBlocked() {
         return isblocked;
     }
 
-    public void setIsblocked(Boolean isblocked) {
+    @JsonProperty("isblocked")
+    public void setIsBlocked(Boolean isblocked) {
         this.isblocked = isblocked;
     }
 
