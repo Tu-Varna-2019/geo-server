@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import java.util.Date;
 
-import com.tuvarna.exception.BadRequestError;
-import com.tuvarna.exception.ResourceNotFoundError;
-import com.tuvarna.exception.ServerErrorMessage;
+import com.tuvarna.geo.exception.BadRequestError;
+import com.tuvarna.geo.exception.ResourceNotFoundError;
+import com.tuvarna.geo.exception.ServerErrorMessage;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {

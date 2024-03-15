@@ -3,7 +3,7 @@ package com.tuvarna.geo.service.validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tuvarna.exception.BadRequestError;
+import com.tuvarna.geo.exception.BadRequestError;
 import com.tuvarna.geo.entity.UserType;
 import com.tuvarna.geo.repository.UserRepository;
 import com.tuvarna.geo.repository.UserTypeRepository;

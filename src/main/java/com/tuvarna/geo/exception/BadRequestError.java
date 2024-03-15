@@ -1,4 +1,4 @@
-package com.tuvarna.exception;
+package com.tuvarna.geo.exception;
 
 public class BadRequestError extends RuntimeException {
     public BadRequestError(String message) {
