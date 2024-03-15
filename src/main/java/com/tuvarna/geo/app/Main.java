@@ -1,4 +1,4 @@
-package com.tuvarna.app;
+package com.tuvarna.geo.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

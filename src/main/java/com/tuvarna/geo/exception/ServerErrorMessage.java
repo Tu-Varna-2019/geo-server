@@ -1,4 +1,4 @@
-package com.tuvarna.exception;
+package com.tuvarna.geo.exception;
 
 import java.util.Date;
 
