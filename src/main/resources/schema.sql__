@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS "usertype" (
+    id SERIAL PRIMARY KEY,
+    "type" VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS "user" (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
+    isblocked BOOLEAN NOT NULL,
+    usertype INT,
+    FOREIGN KEY (usertype) REFERENCES "usertype" (id)
+);
