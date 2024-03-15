@@ -25,10 +25,11 @@ public class RegisterController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> create(@RequestBody UserDTO user) {
+    public ResponseEntity<String> create(@RequestBody UserDTO userDto) {
 
-        // TODO: Return User object ?
-        userService.registerUser(user);
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        User createdUser = userService.registerUser(userDto);
+        return new ResponseEntity<>(String.format("User %s registered successfully", createdUser.getUsername()),
+                HttpStatus.CREATED);
+
     }
 }

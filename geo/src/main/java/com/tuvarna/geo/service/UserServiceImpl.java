@@ -1,15 +1,16 @@
 package com.tuvarna.geo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tuvarna.geo.entity.User;
-import com.tuvarna.geo.entity.UserType;
+import com.tuvarna.geo.mapper.UserMapper;
 import com.tuvarna.geo.repository.UserRepository;
 import com.tuvarna.geo.repository.UserTypeRepository;
 import com.tuvarna.geo.service.dto.UserDTO;
+import com.tuvarna.geo.service.validate.UserValidateService;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -17,29 +18,30 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private UserTypeRepository userTypeRepository;
+    private UserValidateService userValidateService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository) {
+    private BCryptPasswordEncoder encodePassword;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository,
+            UserValidateService userValidateService) {
         this.userRepository = userRepository;
         this.userTypeRepository = userTypeRepository;
+        this.userValidateService = userValidateService;
     }
 
     @Override
     @Transactional
-    public void registerUser(UserDTO userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword()); // Consider encrypting this!
-        user.setisblocked(userDto.getIsblocked());
+    public User registerUser(UserDTO userDto) {
+        User user = UserMapper.toEntity(userDto, encodePassword);
 
-        if (userDto.getUsertype() != null) {
-            UserType userType = userTypeRepository.findByType(userDto.getUsertype())
-                    .orElseThrow(
-                            () -> new EntityNotFoundException("UserType not found with id " + userDto.getUsertype()));
-            user.setUserType(userType);
-        }
+        // Check if the user already exists
+        userValidateService.validateUserDoesNotExist(userDto.getEmail());
 
-        userRepository.save(user);
+        // Check if the user type exists
+        user.setUserType(userValidateService.validateUserTypeExists(userDto.getUsertype()));
+
+        return userRepository.save(user);
     }
 }

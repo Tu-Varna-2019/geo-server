@@ -18,16 +18,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String username;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = false)
     private boolean isblocked;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,11 +60,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isblocked() {
+    public boolean getIsBlocked() {
         return isblocked;
     }
 
-    public void setisblocked(boolean isblocked) {
+    public void setIsBlocked(boolean isblocked) {
         this.isblocked = isblocked;
     }
 
