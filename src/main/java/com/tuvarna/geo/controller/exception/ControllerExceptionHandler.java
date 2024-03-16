@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import java.util.Date;
 
+import com.tuvarna.geo.exception.AccessDeniedError;
 import com.tuvarna.geo.exception.BadRequestError;
 import com.tuvarna.geo.exception.ResourceNotFoundError;
 import com.tuvarna.geo.exception.ServerErrorMessage;
@@ -29,10 +30,18 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(serverErrorMessage);
     }
 
+    @ExceptionHandler(AccessDeniedError.class)
+    public ResponseEntity<?> handleAccessDeniedError(AccessDeniedError ex, WebRequest request) {
+        ServerErrorMessage serverErrorMessage = new ServerErrorMessage(new Date(),
+                "Access Denied!", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(serverErrorMessage);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGlobalException(Exception ex, WebRequest request) {
         ServerErrorMessage serverErrorMessage = new ServerErrorMessage(new Date(),
                 "Error occured: Sorry for the inconvenience!", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(serverErrorMessage);
     }
+
 }
