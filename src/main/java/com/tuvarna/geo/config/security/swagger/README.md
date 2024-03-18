@@ -21,10 +21,16 @@ More info: <https://openapi-generator.tech/docs/installation/>
 2. Copy the openapi.yaml file to the Kotlin Android app, and in the root directory type:
 
 ```bash
-openapi-generator generate -i openapi.yaml -g kotlin -o .
+cd app/src/main/java/com/tuvarna/geo
+openapi-generator generate -i config/openapi.yaml -g kotlin --config config/openapi-config.json --additional-properties=packageName=com.tuvarna.geo
 
 ```
 
+Then try to move the `src/com/tuvarna/geo` sub folders to `com/tuvarna/geo` directory, the package should be still valid and you don't need to manually refactor it.
+
+```bash
+mv ./src/com/tuvarna/geo/* .
+```
 
 ## Access the web ui
 
