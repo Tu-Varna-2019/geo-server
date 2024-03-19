@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.tuvarna.geo.controller.RegisterController;
 import com.tuvarna.geo.entity.User;
 import com.tuvarna.geo.mapper.UserMapper;
 import com.tuvarna.geo.repository.UserRepository;
 import com.tuvarna.geo.repository.UserTypeRepository;
+import com.tuvarna.geo.service.dto.RestApiResponse;
 import com.tuvarna.geo.service.dto.UserDTO;
 import com.tuvarna.geo.service.validate.UserValidateService;
 
@@ -38,7 +38,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User registerUser(UserDTO userDto) {
+    public RestApiResponse<Void> registerUser(UserDTO userDto) {
+
         User user = UserMapper.toEntity(userDto, encodePassword);
         logger.info("Mapping user DTO to entity");
 
@@ -50,6 +51,10 @@ public class UserServiceImpl implements UserService {
         user.setUserType(userValidateService.validateUserTypeExists(userDto.getUsertype()));
         logger.info("Validated user type exists");
 
-        return userRepository.save(user);
+        userRepository.save(user);
+
+        logger.info("User registered successfully");
+        return new RestApiResponse<>(null, "User registered successfully", 201);
+
     }
 }
