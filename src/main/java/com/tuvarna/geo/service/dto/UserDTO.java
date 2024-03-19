@@ -50,4 +50,15 @@ public class UserDTO {
     public void setUsertype(String usertype) {
         this.usertype = usertype;
     }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", isblocked=" + isblocked +
+                ", usertype='" + usertype + '\'' +
+                '}';
+    }
 }

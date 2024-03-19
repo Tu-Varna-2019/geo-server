@@ -5,34 +5,41 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import java.util.Date;
 
+import com.tuvarna.geo.exception.AccessDeniedError;
 import com.tuvarna.geo.exception.BadRequestError;
 import com.tuvarna.geo.exception.ResourceNotFoundError;
-import com.tuvarna.geo.exception.ServerErrorMessage;
+import com.tuvarna.geo.service.dto.RestApiResponse;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundError.class)
-    public ResponseEntity<?> handleResourceNotFoundError(ResourceNotFoundError ex, WebRequest request) {
-
-        ServerErrorMessage serverErrorMessage = new ServerErrorMessage(new Date(),
-                "Error occured: Not found!", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(serverErrorMessage);
+    public ResponseEntity<RestApiResponse<Void>> handleResourceNotFoundError(ResourceNotFoundError ex,
+            WebRequest request) {
+        RestApiResponse<Void> apiResponse = new RestApiResponse<>(null, ex.getMessage(), HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BadRequestError.class)
-    public ResponseEntity<?> handleBadRequestError(BadRequestError ex, WebRequest request) {
-        ServerErrorMessage serverErrorMessage = new ServerErrorMessage(new Date(),
-                "Bad Request!", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(serverErrorMessage);
+    public ResponseEntity<RestApiResponse<Void>> handleBadRequestError(BadRequestError ex, WebRequest request) {
+
+        RestApiResponse<Void> apiResponse = new RestApiResponse<>(null, ex.getMessage(),
+                HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessDeniedError.class)
+    public ResponseEntity<RestApiResponse<Void>> handleAccessDeniedError(AccessDeniedError ex, WebRequest request) {
+        RestApiResponse<Void> apiResponse = new RestApiResponse<>(null, ex.getMessage(), HttpStatus.FORBIDDEN.value());
+        return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGlobalException(Exception ex, WebRequest request) {
-        ServerErrorMessage serverErrorMessage = new ServerErrorMessage(new Date(),
-                "Error occured: Sorry for the inconvenience!", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(serverErrorMessage);
+    public ResponseEntity<RestApiResponse<Void>> handleGlobalException(Exception ex, WebRequest request) {
+        RestApiResponse<Void> apiResponse = new RestApiResponse<>(null, "An error occurred",
+                HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

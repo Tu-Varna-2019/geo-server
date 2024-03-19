@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
@@ -9,7 +8,14 @@
         </File>
     </Appenders>
     <Loggers>
-        <Root level="debug">
+        <Logger name="org.springframework" level="WARN" />
+        <Logger name="org.hibernate" level="WARN" />
+        <Logger name="org.apache" level="WARN" />
+        <Logger name="com.tuvarna.geo" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="FileLogger" />
+        </Logger>
+        <Root level="ERROR">
             <AppenderRef ref="Console" />
             <AppenderRef ref="FileLogger" />
         </Root>

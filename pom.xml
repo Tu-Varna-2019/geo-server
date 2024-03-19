@@ -39,8 +39,8 @@
 		<postgres.version>42.7.2</postgres.version>
 
 		<!-- Swagger -->
-		<swagger.version>3.0.0</swagger.version>
 		<openapi-starter.version>2.3.0</openapi-starter.version>
+		<openapi-ui.version>1.8.0</openapi-ui.version>
 
 	</properties>
 	<dependencies>
@@ -143,15 +143,15 @@
 		<!-- Swagger -->
 
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${swagger.version}</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${openapi-starter.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>${openapi-starter.version}</version>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${openapi-ui.version}</version>
 		</dependency>
 
 
