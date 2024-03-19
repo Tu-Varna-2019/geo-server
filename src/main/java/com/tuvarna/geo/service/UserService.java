@@ -6,4 +6,6 @@ import com.tuvarna.geo.service.dto.UserDTO;
 public interface UserService {
 
     RestApiResponse<Void> registerUser(UserDTO user);
+
+    RestApiResponse<Void> authenticateUser(UserDTO user);
 }

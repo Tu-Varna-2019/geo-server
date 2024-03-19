@@ -1,9 +1,11 @@
 package com.tuvarna.geo.service.validate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tuvarna.geo.exception.BadRequestError;
+import com.tuvarna.geo.exception.ForbiddenError;
 import com.tuvarna.geo.entity.UserType;
 import com.tuvarna.geo.repository.UserRepository;
 import com.tuvarna.geo.repository.UserTypeRepository;
@@ -23,6 +25,19 @@ public class UserValidateService {
     public void validateUserDoesNotExist(String email) {
         if (userRepository.findByEmail(email) != null) {
             throw new BadRequestError("User already exists with email: " + email);
+        }
+    }
+
+    public void validateUserExists(String email) {
+        if (userRepository.findByEmail(email) == null) {
+            throw new ForbiddenError("Incorrect email/password!");
+        }
+    }
+
+    public void validatePasswordMatch(BCryptPasswordEncoder encodePassword, String actualPassword,
+            String expectedPassword) {
+        if (!encodePassword.matches(actualPassword, expectedPassword)) {
+            throw new ForbiddenError("Incorrect email/password!");
         }
     }
 

@@ -45,16 +45,37 @@ public class UserServiceImpl implements UserService {
 
         // Check if the user already exists
         userValidateService.validateUserDoesNotExist(userDto.getEmail());
-        logger.info("Validated user does not exist");
+        logger.info("User %s does not exist", userDto.getEmail());
 
         // Check if the user type exists
         user.setUserType(userValidateService.validateUserTypeExists(userDto.getUsertype()));
-        logger.info("Validated user type exists");
+        logger.info("User type %s exists", userDto.getUsertype());
 
         userRepository.save(user);
 
-        logger.info("User registered successfully");
+        logger.info("User %s registered successfully", userDto.getEmail());
         return new RestApiResponse<>(null, "User registered successfully", 201);
+
+    }
+
+    @Override
+    @Transactional
+    public RestApiResponse<Void> authenticateUser(UserDTO userDto) {
+
+        User user = UserMapper.toEntity(userDto, encodePassword);
+        logger.info("Mapping user DTO to entity");
+
+        // Fetch the user from the database
+        userValidateService.validateUserExists(user.getEmail());
+        logger.info("User %s does not exist", userDto.getEmail());
+
+        User userFromDb = userRepository.findByEmail(user.getEmail());
+
+        // Compare the passwords
+        userValidateService.validatePasswordMatch(encodePassword, user.getPassword(), userFromDb.getPassword());
+
+        logger.info("User logged in successfully");
+        return new RestApiResponse<>(null, "User logged in successfully", 201);
 
     }
 }
