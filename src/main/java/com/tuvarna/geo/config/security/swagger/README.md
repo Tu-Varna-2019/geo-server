@@ -8,6 +8,8 @@ curl http://localhost:8080/v3/api-docs.yaml > openapi.yaml
 
 ```
 
+NOTE: Be sure to start your server beforehand!!
+
 2. Install the openapi-generator cli to convert the yaml file to kotlin compliant code:
 
 ```homebrew
@@ -22,6 +24,7 @@ More info: <https://openapi-generator.tech/docs/installation/>
 
 ```bash
 cd app/src/main/java/com/tuvarna/geo
+
 openapi-generator generate -i config/openapi.yaml -g kotlin --config config/openapi-config.json --additional-properties=packageName=com.tuvarna.geo
 
 ```
