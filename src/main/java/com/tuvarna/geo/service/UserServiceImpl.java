@@ -11,7 +11,8 @@ import com.tuvarna.geo.mapper.UserMapper;
 import com.tuvarna.geo.repository.UserRepository;
 import com.tuvarna.geo.repository.UserTypeRepository;
 import com.tuvarna.geo.service.dto.RestApiResponse;
-import com.tuvarna.geo.service.dto.UserDTO;
+import com.tuvarna.geo.service.dto.user.LoginUserDTO;
+import com.tuvarna.geo.service.dto.user.RegisterUserDTO;
 import com.tuvarna.geo.service.validate.UserValidateService;
 
 import jakarta.transaction.Transactional;
@@ -22,25 +23,22 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
 
     private UserRepository userRepository;
-    private UserTypeRepository userTypeRepository;
     private UserValidateService userValidateService;
 
-    @Autowired
     private BCryptPasswordEncoder encodePassword;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository,
-            UserValidateService userValidateService) {
+            UserValidateService userValidateService, UserMapper userMapper) {
         this.userRepository = userRepository;
-        this.userTypeRepository = userTypeRepository;
         this.userValidateService = userValidateService;
     }
 
     @Override
     @Transactional
-    public RestApiResponse<Void> registerUser(UserDTO userDto) {
+    public RestApiResponse<Void> registerUser(RegisterUserDTO userDto) {
 
-        User user = UserMapper.toEntity(userDto, encodePassword);
+        User user = userMapper.toEntity(userDto, encodePassword);
         logger.info("Mapping user DTO to entity");
 
         // Check if the user already exists
@@ -60,9 +58,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public RestApiResponse<Void> authenticateUser(UserDTO userDto) {
+    public RestApiResponse<Void> authenticateUser(LoginUserDTO userDto) {
 
-        User user = UserMapper.toEntity(userDto, encodePassword);
+        User user = userMapper.toEntity(userDto, encodePassword);
         logger.info("Mapping user DTO to entity");
 
         // Fetch the user from the database
@@ -74,8 +72,10 @@ public class UserServiceImpl implements UserService {
         // Compare the passwords
         userValidateService.validatePasswordMatch(encodePassword, user.getPassword(), userFromDb.getPassword());
 
+        // Check if the user is blocked
+        userValidateService.validateIsUserBlocked(userFromDb.getIsBlocked());
+
         logger.info("User logged in successfully");
         return new RestApiResponse<>(null, "User logged in successfully", 201);
-
     }
 }
