@@ -6,17 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tuvarna.geo.entity.User;
 import com.tuvarna.geo.service.UserService;
+import com.tuvarna.geo.service.dto.RestApiResponse;
 import com.tuvarna.geo.service.dto.UserDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.web.bind.annotation.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 public class RegisterController {
@@ -38,15 +38,9 @@ public class RegisterController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<String> create(@RequestBody UserDTO userDto) {
-
+    public ResponseEntity<RestApiResponse<Void>> create(@RequestBody UserDTO userDto) {
         logger.info("Received a request from client to register user: {}", userDto);
 
-        User createdUser = userService.registerUser(userDto);
-        logger.info("User %s registered successfully", createdUser.getEmail());
-
-        return new ResponseEntity<>(String.format("User %s registered successfully", createdUser.getUsername()),
-                HttpStatus.CREATED);
-
+        return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.CREATED);
     }
 }
