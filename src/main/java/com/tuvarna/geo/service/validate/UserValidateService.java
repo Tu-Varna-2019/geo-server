@@ -41,6 +41,12 @@ public class UserValidateService {
         }
     }
 
+    public void validateIsUserBlocked(Boolean isBlocked) {
+        if (isBlocked.booleanValue()) {
+            throw new ForbiddenError("User is blocked!");
+        }
+    }
+
     public UserType validateUserTypeExists(String userTypeString) {
         return userTypeRepository.findByType(userTypeString)
                 .orElseThrow(() -> new BadRequestError("UserType not found: " + userTypeString));

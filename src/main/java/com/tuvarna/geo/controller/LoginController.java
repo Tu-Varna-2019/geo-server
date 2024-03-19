@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tuvarna.geo.service.UserService;
 import com.tuvarna.geo.service.dto.RestApiResponse;
-import com.tuvarna.geo.service.dto.UserDTO;
+import com.tuvarna.geo.service.dto.user.LoginUserDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,7 +22,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public class LoginController {
 
     private static final Logger logger = LogManager.getLogger(LoginController.class.getName());
-
     private UserService userService;
 
     @Autowired
@@ -38,7 +37,7 @@ public class LoginController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<RestApiResponse<Void>> authenticate(@RequestBody UserDTO userDto) {
+    public ResponseEntity<RestApiResponse<Void>> authenticateUser(@RequestBody LoginUserDTO userDto) {
         logger.info("Received a request from client to login user: {}", userDto);
 
         return new ResponseEntity<>(userService.authenticateUser(userDto), HttpStatus.OK);
