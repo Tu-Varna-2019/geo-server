@@ -10,23 +10,17 @@ import com.tuvarna.geo.service.dto.user.LoginUserDTO;
 import com.tuvarna.geo.service.dto.user.RegisterUserDTO;
 
 @Mapper(componentModel = "spring")
-
 public interface UserMapper {
     UserMapper mapperInstance = Mappers.getMapper(UserMapper.class);
 
     @Mapping(target = "password", ignore = true)
     User toEntity(RegisterUserDTO userDto);
 
-    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "email", source = "userDto.email")
+    @Mapping(target = "password", source = "userDto.password")
     User toEntity(LoginUserDTO userDto);
 
     default User toEntity(RegisterUserDTO userDto, BCryptPasswordEncoder encoder) {
-        User user = toEntity(userDto);
-        user.setPassword(encoder.encode(userDto.getPassword()));
-        return user;
-    }
-
-    default User toEntity(LoginUserDTO userDto, BCryptPasswordEncoder encoder) {
         User user = toEntity(userDto);
         user.setPassword(encoder.encode(userDto.getPassword()));
         return user;
