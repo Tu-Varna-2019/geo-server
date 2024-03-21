@@ -11,6 +11,7 @@ import com.tuvarna.geo.mapper.UserMapper;
 import com.tuvarna.geo.repository.UserRepository;
 import com.tuvarna.geo.repository.UserTypeRepository;
 import com.tuvarna.geo.service.dto.RestApiResponse;
+import com.tuvarna.geo.service.dto.user.LoggedInUserDTO;
 import com.tuvarna.geo.service.dto.user.LoginUserDTO;
 import com.tuvarna.geo.service.dto.user.RegisterUserDTO;
 import com.tuvarna.geo.service.validate.UserValidateService;
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     @SuppressWarnings("squid:S3457")
-    public RestApiResponse<Void> authenticateUser(LoginUserDTO userDto) {
+    public RestApiResponse<LoggedInUserDTO> authenticateUser(LoginUserDTO userDto) {
 
         User user = userMapper.toEntity(userDto);
         logger.info("Mapping user DTO to entity");
@@ -81,6 +82,7 @@ public class UserServiceImpl implements UserService {
         userValidateService.validateIsUserBlocked(userFromDb.getIsBlocked());
 
         logger.info("User logged in successfully");
-        return new RestApiResponse<>(null, "User logged in successfully", 201);
+
+        return new RestApiResponse<>(new LoggedInUserDTO(userFromDb), "User logged in successfully", 201);
     }
 }

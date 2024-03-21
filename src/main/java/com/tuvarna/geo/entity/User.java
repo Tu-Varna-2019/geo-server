@@ -1,5 +1,7 @@
 package com.tuvarna.geo.entity;
 
+import com.tuvarna.geo.service.dto.user.LoggedInUserDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,8 +11,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "\"user\"")
 public class User {
 
@@ -34,9 +40,6 @@ public class User {
     @JoinColumn(name = "usertype", nullable = false)
     private UserType usertype;
 
-    public User() {
-    }
-
     public User(String email, String username, String password) {
         this.email = email;
         this.username = username;
@@ -44,28 +47,8 @@ public class User {
         this.isblocked = false;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public boolean getIsBlocked() {
         return isblocked;
-    }
-
-    public void setIsBlocked(boolean isblocked) {
-        this.isblocked = isblocked;
     }
 
     public UserType getUserType() {
@@ -76,11 +59,4 @@ public class User {
         this.usertype = usertype;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
