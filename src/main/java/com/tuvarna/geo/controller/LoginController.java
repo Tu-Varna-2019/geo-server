@@ -1,30 +1,46 @@
-// package com.tuvarna.geo.controller;
+package com.tuvarna.geo.controller;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
-// import com.tuvarna.geo.repository.UserRepositoryImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-// import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import com.tuvarna.geo.service.UserService;
+import com.tuvarna.geo.service.dto.RestApiResponse;
+import com.tuvarna.geo.service.dto.user.LoggedInUserDTO;
+import com.tuvarna.geo.service.dto.user.LoginUserDTO;
 
-// @RestController
-// @RequestMapping("/login")
-// public class LoginController {
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-// @Autowired
-// private UserRepositoryImpl userRepository;
+@RestController
+public class LoginController {
 
-// @SuppressWarnings("rawtypes")
-// @GetMapping
-// public Iterable findAll() {
-// return userRepository.findAll();
-// }
+    private static final Logger logger = LogManager.getLogger(LoginController.class.getName());
+    private UserService userService;
 
-// @PostMapping("/verify")
-// public void verify(@RequestBody String email, @RequestBody String password) {
-// userRepository.verify(email, password);
-// }
+    @Autowired
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
 
-// }
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Logging on a new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User logged in successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<RestApiResponse<LoggedInUserDTO>> authenticateUser(@RequestBody LoginUserDTO userDto) {
+        logger.info("Received a request from client to login user: {}", userDto);
+
+        return new ResponseEntity<>(userService.authenticateUser(userDto), HttpStatus.OK);
+    }
+}

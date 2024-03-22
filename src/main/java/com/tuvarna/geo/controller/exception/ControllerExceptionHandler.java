@@ -8,11 +8,19 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.tuvarna.geo.exception.AccessDeniedError;
 import com.tuvarna.geo.exception.BadRequestError;
+import com.tuvarna.geo.exception.ForbiddenError;
 import com.tuvarna.geo.exception.ResourceNotFoundError;
 import com.tuvarna.geo.service.dto.RestApiResponse;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
+
+    @ExceptionHandler(ForbiddenError.class)
+    public ResponseEntity<RestApiResponse<Void>> handleForbiddenError(ForbiddenError ex,
+            WebRequest request) {
+        RestApiResponse<Void> apiResponse = new RestApiResponse<>(null, ex.getMessage(), HttpStatus.FORBIDDEN.value());
+        return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
+    }
 
     @ExceptionHandler(ResourceNotFoundError.class)
     public ResponseEntity<RestApiResponse<Void>> handleResourceNotFoundError(ResourceNotFoundError ex,
