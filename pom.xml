@@ -22,6 +22,7 @@
 
 		<!-- Utilities -->
 		<lombok.version>1.18.30</lombok.version>
+		<map-struct.version>1.5.5.Final</map-struct.version>
 
 		<!-- Logging -->
 		<log4jdbc.log4j2.version>1.16</log4jdbc.log4j2.version>
@@ -176,7 +177,21 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
 			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${map-struct.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>${map-struct.version}</version>
 		</dependency>
 
 
@@ -205,6 +220,13 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${map-struct.version}</version>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 

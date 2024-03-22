@@ -1,27 +1,37 @@
 package com.tuvarna.geo.mapper;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.tuvarna.geo.entity.User;
-import com.tuvarna.geo.service.dto.UserDTO;
+import com.tuvarna.geo.service.dto.user.LoginUserDTO;
+import com.tuvarna.geo.service.dto.user.RegisterUserDTO;
 
-public class UserMapper {
-    public static User toEntity(UserDTO userDto, BCryptPasswordEncoder encodePassword) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(encodePassword.encode(userDto.getPassword()));
-        user.setIsBlocked(userDto.getIsBlocked());
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+    UserMapper mapperInstance = Mappers.getMapper(UserMapper.class);
 
+    @Mapping(target = "password", ignore = true)
+    User toEntity(RegisterUserDTO userDto);
+
+    @Mapping(target = "email", source = "userDto.email")
+    @Mapping(target = "password", source = "userDto.password")
+    User toEntity(LoginUserDTO userDto);
+
+    default User toEntity(RegisterUserDTO userDto, BCryptPasswordEncoder encoder) {
+        User user = toEntity(userDto);
+        user.setPassword(encoder.encode(userDto.getPassword()));
         return user;
     }
 
-    public static UserDTO toDto(User user) {
-        UserDTO userDto = new UserDTO();
-        userDto.setUsername(user.getUsername());
-        userDto.setEmail(user.getEmail());
-        userDto.setIsBlocked(user.getIsBlocked());
+    public static RegisterUserDTO toRegisterUserDto(User user) {
+        return new RegisterUserDTO(user.getUsername(), user.getEmail(), user.getPassword(), user.getIsBlocked(), null);
 
-        return userDto;
+    }
+
+    public static LoginUserDTO toLoginUserDto(User user) {
+        return new LoginUserDTO(user.getEmail(), user.getPassword());
     }
 }

@@ -25,15 +25,14 @@ More info: <https://openapi-generator.tech/docs/installation/>
 ```bash
 cd app/src/main/java/com/tuvarna/geo
 
-openapi-generator generate -i config/openapi.yaml -g kotlin --config config/openapi-config.json --additional-properties=packageName=com.tuvarna.geo
+openapi-generator generate -i config/openapi.yaml -g kotlin --config config/openapi-config.json --additional-properties=packageName=com.tuvarna.geo.rest_api
 
 ```
 
 Replace the generated openapi classes with the current ones:
 
 ```bash
-rsync -av --remove-source-files src/main/kotlin/com/tuvarna/geo/ ./ && rm -rf src/
-
+rsync -av --remove-source-files src/main/kotlin/com/tuvarna/geo/rest_api ./ && rm -rf src/
 
 ```
 
