@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tuvarna.geo.entity.security.JWTAuthResponse;
 import com.tuvarna.geo.service.UserService;
 import com.tuvarna.geo.service.dto.RestApiResponse;
 import com.tuvarna.geo.service.dto.user.LoggedInUserDTO;
@@ -20,6 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
+@RequestMapping("/auth")
 public class LoginController {
 
     private static final Logger logger = LogManager.getLogger(LoginController.class.getName());
@@ -40,6 +43,10 @@ public class LoginController {
     })
     public ResponseEntity<RestApiResponse<LoggedInUserDTO>> authenticateUser(@RequestBody LoginUserDTO userDto) {
         logger.info("Received a request from client to login user: {}", userDto);
+
+        // String token = authService.login(userDto);
+        // JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+        // jwtAuthResponse.setAccessToken(token);
 
         return new ResponseEntity<>(userService.authenticateUser(userDto), HttpStatus.OK);
     }

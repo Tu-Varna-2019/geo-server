@@ -1,7 +1,5 @@
 package com.tuvarna.geo.entity;
 
-import com.tuvarna.geo.service.dto.user.LoggedInUserDTO;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -57,6 +55,12 @@ public class User {
 
     public void setUserType(UserType usertype) {
         this.usertype = usertype;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("id=%s,username=%s,email=%s,password=***,isBlocked=%s,usertype=%s ", id, username, email,
+                isblocked, username);
     }
 
 }
