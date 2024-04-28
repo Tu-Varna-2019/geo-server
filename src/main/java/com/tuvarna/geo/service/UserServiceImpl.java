@@ -2,18 +2,15 @@ package com.tuvarna.geo.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.tuvarna.geo.config.security.JWTTokenProvider;
 import com.tuvarna.geo.entity.User;
 import com.tuvarna.geo.entity.security.JWTAuthResponse;
 import com.tuvarna.geo.mapper.UserMapper;
@@ -23,6 +20,7 @@ import com.tuvarna.geo.service.dto.RestApiResponse;
 import com.tuvarna.geo.service.dto.user.LoggedInUserDTO;
 import com.tuvarna.geo.service.dto.user.LoginUserDTO;
 import com.tuvarna.geo.service.dto.user.RegisterUserDTO;
+import com.tuvarna.geo.service.security.JWTTokenProvider;
 import com.tuvarna.geo.service.validate.UserValidateService;
 
 import jakarta.transaction.Transactional;
@@ -71,17 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     @SuppressWarnings({ "squid:S3457", "squid:S2629" })
-    public RestApiResponse<LoggedInUserDTO> authenticateUser(LoginUserDTO userDto) {
-
-        // Authentication authentication = authenticationManager.authenticate(
-        // new UsernamePasswordAuthenticationToken(
-        // userDto.getEmail(), userDto.getPassword()));
-
-        // SecurityContext sc = SecurityContextHolder.getContext();
-        // sc.setAuthentication(authentication);
-        // String token = jwtTokenProvider.generateToken(authentication);
-        // JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
-        // jwtAuthResponse.setAccessToken(token);
+    public RestApiResponse<LoggedInUserDTO> login(LoginUserDTO userDto) {
 
         User user = userMapper.toEntity(userDto);
         logger.info("Mapping user DTO to entity");
@@ -94,8 +82,24 @@ public class UserServiceImpl implements UserService {
         logger.info("User logged in successfully. Sending credentials: %s", userFromDb.toString());
 
         LoggedInUserDTO loggedUserDTO = new LoggedInUserDTO(userFromDb);
+        JWTAuthResponse jwtAuthResponse = createJWToken(userDto.getEmail(), userDto.getPassword());
+        logger.info("jwt token: {}", jwtAuthResponse.getAccessToken());
+        loggedUserDTO.setAccessToken(jwtAuthResponse.getAccessToken());
 
         return new RestApiResponse<>(loggedUserDTO, "User logged in successfully", 201);
     }
 
+    private JWTAuthResponse createJWToken(String email, String password) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        email, password));
+
+        SecurityContext sc = SecurityContextHolder.getContext();
+        sc.setAuthentication(authentication);
+        String token = jwtTokenProvider.generateToken(authentication);
+        JWTAuthResponse jwt = new JWTAuthResponse();
+        jwt.setAccessToken(token);
+        return jwt;
+
+    }
 }

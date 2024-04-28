@@ -11,6 +11,6 @@ public interface UserService {
 
     RestApiResponse<Void> registerUser(RegisterUserDTO user);
 
-    RestApiResponse<LoggedInUserDTO> authenticateUser(LoginUserDTO user);
+    RestApiResponse<LoggedInUserDTO> login(LoginUserDTO user);
 
 }

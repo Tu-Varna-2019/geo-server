@@ -1,9 +1,10 @@
-package com.tuvarna.geo.config.security;
+package com.tuvarna.geo.service.security;
 
 import java.security.Key;
 import java.util.Date;
 
 import org.springframework.security.core.Authentication;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class JWTTokenProvider {
@@ -36,7 +38,6 @@ public class JWTTokenProvider {
                 .setExpiration(expireDate)
                 .signWith(key())
                 .compact();
-
     }
 
     private Key key() {
@@ -54,7 +55,6 @@ public class JWTTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-
             Jwts.parserBuilder()
                     .setSigningKey(key())
                     .build()
@@ -65,4 +65,13 @@ public class JWTTokenProvider {
             throw new BadRequestError("Invalid JWT token");
         }
     }
+
+    public String getTokenFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.isNotBlank(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7, bearerToken.length());
+        }
+        return null;
+    }
+
 }
