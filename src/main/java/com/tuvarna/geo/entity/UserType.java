@@ -25,4 +25,9 @@ public class UserType {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return String.format("id=%s,type=%s", id, type);
+    }
+
 }

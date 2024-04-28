@@ -12,6 +12,7 @@ public class LoggedInUserDTO {
     private String username;
     private String userType;
     private String email;
+    private String accessToken;
 
     public LoggedInUserDTO(User user) {
         this.id = user.getId();
@@ -19,4 +20,5 @@ public class LoggedInUserDTO {
         this.userType = user.getUserType().getType();
         this.email = user.getEmail();
     }
+
 }
