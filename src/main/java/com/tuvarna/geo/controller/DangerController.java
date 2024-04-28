@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tuvarna.geo.service.UserService;
+import com.tuvarna.geo.entity.Earthquake;
+import com.tuvarna.geo.entity.Soil;
+import com.tuvarna.geo.service.EarthquakeService;
+import com.tuvarna.geo.service.SoilService;
 import com.tuvarna.geo.service.dto.RestApiResponse;
-import com.tuvarna.geo.service.dto.user.LoggedInUserDTO;
-import com.tuvarna.geo.service.dto.user.LoginUserDTO;
-import com.tuvarna.geo.service.dto.user.RegisterUserDTO;
+import com.tuvarna.geo.service.dto.danger.DangerDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,11 +27,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public class DangerController {
 
     private static final Logger logger = LogManager.getLogger(DangerController.class.getName());
-    private UserService userService;
+    private SoilService soilService;
+    private EarthquakeService earthquakeService;
 
     @Autowired
-    public DangerController(UserService userService) {
-        this.userService = userService;
+    public DangerController(SoilService soilService, EarthquakeService earthquakeService) {
+        this.soilService = soilService;
+        this.earthquakeService = earthquakeService;
     }
 
     @PostMapping("/soil")
@@ -41,23 +44,23 @@ public class DangerController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<RestApiResponse<LoggedInUserDTO>> login(@RequestBody LoginUserDTO userDto) {
-        logger.info("Received a polypoint from client to get the corresponding soil type: {}", userDto);
+    public ResponseEntity<RestApiResponse<Soil>> getSoil(@RequestBody DangerDTO dangerDTO) {
+        logger.info("Received a polypoint from client to get the corresponding soil type: {}", dangerDTO);
 
-        return new ResponseEntity<>(userService.login(userDto), HttpStatus.OK);
+        return new ResponseEntity<>(soilService.getSoil(dangerDTO), HttpStatus.OK);
     }
 
     @PostMapping("/earthquake")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Retrieve earthquake")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User registered successfully"),
+            @ApiResponse(responseCode = "201", description = "Earthquake retrieved!"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<RestApiResponse<Void>> create(@RequestBody RegisterUserDTO userDto) {
-        logger.info("Received a request from client to register user: {}", userDto);
+    public ResponseEntity<RestApiResponse<Earthquake>> getEarthquake(@RequestBody DangerDTO dangerDTO) {
+        logger.info("Received a polypoint from client to get the corresponding earthquake: {}", dangerDTO);
 
-        return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.OK);
+        return new ResponseEntity<>(earthquakeService.getEarthquake(dangerDTO), HttpStatus.OK);
     }
 }
