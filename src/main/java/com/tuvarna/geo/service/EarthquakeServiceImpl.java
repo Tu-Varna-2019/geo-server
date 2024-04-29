@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import com.tuvarna.geo.entity.Earthquake;
 import com.tuvarna.geo.repository.EarthquakeRepository;
 import com.tuvarna.geo.service.dto.RestApiResponse;
@@ -28,9 +28,9 @@ public class EarthquakeServiceImpl implements EarthquakeService {
     @SuppressWarnings({ "squid:S3457", "squid:S2629" })
     public RestApiResponse<Earthquake> getEarthquake(DangerDTO dangerDTO) {
 
-        Earthquake earthquakeDb = earthquakeRepository.findByLongLatitude(dangerDTO.getLongitude(),
+        List<Earthquake> earthquakes = earthquakeRepository.findByLongLatitude(dangerDTO.getLongitude(),
                 dangerDTO.getLatitude());
-
+        Earthquake earthquakeDb = earthquakes.get(0);
         logger.info(
                 "Earthquake found from given longitude/langiude {}, {}",
                 dangerDTO.getLongitude(), dangerDTO.getLatitude());

@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,30 +33,35 @@ public class Soil {
     @Column(nullable = false, unique = false)
     private String domsoi;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = true, unique = false)
     private String phase1;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = true, unique = false)
     private String phase2;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = true, unique = false)
     private String misclu1;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = true, unique = false)
     private String misclu2;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = true, unique = false)
     private String permafrost;
 
-    @Column(nullable = false, unique = false)
-    private float cntcode;
+    @Column(nullable = true, unique = false)
+    private double cntcode;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = true, unique = false)
     private String cntname;
 
     @Column(nullable = false, unique = false)
     private double sqkm;
 
     @Column(nullable = false, unique = false)
+    private String country;
+
+    @Transient
+    @Column(nullable = false, unique = false)
+
     private MultiPolygon geom;
 }

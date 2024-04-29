@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class DangerDTO {
 
-    private long latitude;
-    private long longitude;
+    private double latitude;
+    private double longitude;
 
 }

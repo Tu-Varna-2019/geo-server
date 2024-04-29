@@ -2,10 +2,12 @@ package com.tuvarna.geo.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tuvarna.geo.entity.Soil;
+import com.tuvarna.geo.exception.BadRequestError;
 import com.tuvarna.geo.repository.SoilRepository;
 import com.tuvarna.geo.service.dto.RestApiResponse;
 import com.tuvarna.geo.service.dto.danger.DangerDTO;
@@ -28,7 +30,12 @@ public class SoilServiceImpl implements SoilService {
     @SuppressWarnings({ "squid:S3457", "squid:S2629" })
     public RestApiResponse<Soil> getSoil(DangerDTO dangerDTO) {
 
-        Soil soilDb = soilRepository.findByLongitudeAndLatitude(dangerDTO.getLongitude(), dangerDTO.getLatitude());
+        List<Soil> soils = soilRepository.findByLongitudeAndLatitude(dangerDTO.getLongitude(),
+                dangerDTO.getLatitude());
+        if (soils.isEmpty())
+            throw new BadRequestError("Error, soil type not found!");
+
+        Soil soilDb = soils.get(0);
 
         logger.info(
                 "Soil type found from given longitude/langiude {}, {}",

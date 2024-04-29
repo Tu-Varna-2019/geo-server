@@ -36,7 +36,7 @@ class SecurityConfig {
 
     @Bean
     protected JwtAuthenticationFilter jwtAuthenticationFilter(JWTTokenProvider jwtTokenProvider) {
-        return new JwtAuthenticationFilter(jwtTokenProvider, null);
+        return new JwtAuthenticationFilter(jwtTokenProvider, defaultUserDetailsService);
     }
 
     @SuppressWarnings({ "removal" })
