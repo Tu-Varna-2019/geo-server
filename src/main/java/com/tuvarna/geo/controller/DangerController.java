@@ -51,7 +51,7 @@ public class DangerController {
     }
 
     @PostMapping("/earthquake")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Retrieve earthquake")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Earthquake retrieved!"),

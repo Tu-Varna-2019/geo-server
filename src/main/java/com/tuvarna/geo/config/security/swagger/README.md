@@ -1,10 +1,10 @@
 # Steps for generating and yml file & generate Kotlin data classes based on the yml file
 
-1. Access <http://localhost:8080/v3/api-docs>
+1. Access <http://localhost:8080/api.tuvarna.geo.com/v1/v3/api-docs>
 Or alternatevly you can use this command to save an openapi.yml file by using:
 
 ```bash
-curl http://localhost:8080/v3/api-docs.yaml > openapi.yaml
+curl http://localhost:8080/api.tuvarna.geo.com/v1/v3/api-docs.yaml > openapi.yaml
 
 ```
 
@@ -39,4 +39,4 @@ rsync -av --remove-source-files src/main/kotlin/com/tuvarna/geo/rest_api ./ && r
 
 ## Access the web ui
 
-- <http://localhost:8080/api/swagger-ui/index.html>
+- <http://localhost:8080/api.tuvarna.geo.com/v1/swagger-ui/index.html>

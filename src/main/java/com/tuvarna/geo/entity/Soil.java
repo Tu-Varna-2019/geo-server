@@ -62,6 +62,5 @@ public class Soil {
 
     @Transient
     @Column(nullable = false, unique = false)
-
     private MultiPolygon geom;
 }

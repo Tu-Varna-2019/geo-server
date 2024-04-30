@@ -52,6 +52,8 @@ class SecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
+                .requestMatchers("/swagger-ui/**", "/v3/**")
+                .permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/**")
                 .permitAll()
                 .requestMatchers("/delete/**").hasRole("ADMIN")

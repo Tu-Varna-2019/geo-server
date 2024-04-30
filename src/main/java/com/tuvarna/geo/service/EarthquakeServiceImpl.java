@@ -4,8 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
 import com.tuvarna.geo.entity.Earthquake;
+import com.tuvarna.geo.exception.BadRequestError;
 import com.tuvarna.geo.repository.EarthquakeRepository;
 import com.tuvarna.geo.service.dto.RestApiResponse;
 import com.tuvarna.geo.service.dto.danger.DangerDTO;
@@ -28,14 +29,16 @@ public class EarthquakeServiceImpl implements EarthquakeService {
     @SuppressWarnings({ "squid:S3457", "squid:S2629" })
     public RestApiResponse<Earthquake> getEarthquake(DangerDTO dangerDTO) {
 
-        List<Earthquake> earthquakes = earthquakeRepository.findByLongLatitude(dangerDTO.getLongitude(),
+        Earthquake earthquakeDb = earthquakeRepository.findByLongLatitude(dangerDTO.getLongitude(),
                 dangerDTO.getLatitude());
-        Earthquake earthquakeDb = earthquakes.get(0);
+        if (earthquakeDb == null)
+            throw new BadRequestError("Error, earthquake not found!");
+
         logger.info(
                 "Earthquake found from given longitude/langiude {}, {}",
                 dangerDTO.getLongitude(), dangerDTO.getLatitude());
         logger.info("Now sending earthquake data with id: {}", earthquakeDb.getId());
 
-        return new RestApiResponse<>(earthquakeDb, "Soil type found with id: " + earthquakeDb.getId(), 201);
+        return new RestApiResponse<>(earthquakeDb, "Earthquake found with id: " + earthquakeDb.getId(), 201);
     }
 }
