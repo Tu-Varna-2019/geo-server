@@ -10,7 +10,7 @@ import com.tuvarna.geo.entity.Soil;
 @Repository
 public interface SoilRepository extends JpaRepository<Soil, Integer> {
 
-    @Query(value = "SELECT * FROM dsmw ds WHERE ST_Contains(ds.geom, ST_MakePoint(:latitude,:longitude)) = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM dsmw ds WHERE ST_Contains(ds.geom, ST_MakePoint(:longitude, :latitude)) = true", nativeQuery = true)
     Soil findByLongitudeAndLatitude(@Param("longitude") double longitude, @Param("latitude") double latitude);
 
 }
