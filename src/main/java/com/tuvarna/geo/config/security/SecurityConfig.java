@@ -36,7 +36,7 @@ class SecurityConfig {
 
     @Bean
     protected JwtAuthenticationFilter jwtAuthenticationFilter(JWTTokenProvider jwtTokenProvider) {
-        return new JwtAuthenticationFilter(jwtTokenProvider, null);
+        return new JwtAuthenticationFilter(jwtTokenProvider, defaultUserDetailsService);
     }
 
     @SuppressWarnings({ "removal" })
@@ -52,6 +52,8 @@ class SecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
+                .requestMatchers("/swagger-ui/**", "/v3/**")
+                .permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/**")
                 .permitAll()
                 .requestMatchers("/delete/**").hasRole("ADMIN")
