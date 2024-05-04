@@ -9,7 +9,7 @@ import com.tuvarna.geo.entity.Earthquake;
 import com.tuvarna.geo.exception.BadRequestError;
 import com.tuvarna.geo.repository.EarthquakeRepository;
 import com.tuvarna.geo.service.dto.RestApiResponse;
-import com.tuvarna.geo.service.dto.danger.DangerDTO;
+import com.tuvarna.geo.service.dto.risk.RiskDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -27,16 +27,16 @@ public class EarthquakeServiceImpl implements EarthquakeService {
     @Override
     @Transactional
     @SuppressWarnings({ "squid:S3457", "squid:S2629" })
-    public RestApiResponse<Earthquake> getEarthquake(DangerDTO dangerDTO) {
+    public RestApiResponse<Earthquake> getEarthquake(RiskDTO riskDTO) {
 
-        Earthquake earthquakeDb = earthquakeRepository.findByLongLatitude(dangerDTO.getLongitude(),
-                dangerDTO.getLatitude());
+        Earthquake earthquakeDb = earthquakeRepository.findByLongLatitude(riskDTO.getLongitude(),
+                riskDTO.getLatitude());
         if (earthquakeDb == null)
             throw new BadRequestError("Error, earthquake not found!");
 
         logger.info(
                 "Earthquake found from given longitude/langiude {}, {}",
-                dangerDTO.getLongitude(), dangerDTO.getLatitude());
+                riskDTO.getLongitude(), riskDTO.getLatitude());
         logger.info("Now sending earthquake data with id: {}", earthquakeDb.getId());
 
         return new RestApiResponse<>(earthquakeDb, "Earthquake found with id: " + earthquakeDb.getId(), 201);
