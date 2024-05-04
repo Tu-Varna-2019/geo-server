@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.tuvarna.geo.service.dto.RestApiResponse;
 import com.tuvarna.geo.service.dto.user.request.BlockUserDTO;
 import com.tuvarna.geo.service.dto.user.request.LoggerDTO;
-//import com.tuvarna.geo.service.storage.S3Service;
+import com.tuvarna.geo.service.storage.S3Service;
 
 import jakarta.transaction.Transactional;
 
@@ -19,11 +19,11 @@ public class AdminServiceImpl implements AdminService {
     private static final Logger logger = LogManager.getLogger(AdminServiceImpl.class.getName());
 
     // private AdminRepository adminRepository;
-    // private S3Service s3Service;
+    private S3Service s3Service;
 
     @Autowired
-    public AdminServiceImpl() {// (S3Service s3Service) {
-        // this.s3Service = s3Service;
+    public AdminServiceImpl(S3Service s3Service) {
+        this.s3Service = s3Service;
     }
 
     @Override
@@ -38,6 +38,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     @SuppressWarnings({ "squid:S3457", "squid:S2629" })
     public RestApiResponse<Void> saveLog(LoggerDTO loggerDTO) {
+        s3Service.store(loggerDTO);
 
         return new RestApiResponse<>(null, "Log saved!", 201);
     }
