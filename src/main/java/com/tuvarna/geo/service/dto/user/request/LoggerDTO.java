@@ -1,7 +1,6 @@
 package com.tuvarna.geo.service.dto.user.request;
 
 import java.io.Serializable;
-import java.security.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

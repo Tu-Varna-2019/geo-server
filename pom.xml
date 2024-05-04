@@ -13,7 +13,7 @@
 	<name>geo</name>
 	<artifactId>Masters-Summer-Project-IMD-Java-WebServer-Geo-System</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<description>Tu-Varna project for for georaphic web app in Spring Boot</description>
+	<description>Tu-Varna project for georaphic web app in Spring Boot</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>com.tuvarna.geo.app.Main</start-class>

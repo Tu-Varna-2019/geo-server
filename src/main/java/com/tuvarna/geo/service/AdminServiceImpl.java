@@ -18,7 +18,6 @@ import jakarta.transaction.Transactional;
 public class AdminServiceImpl implements AdminService {
     private static final Logger logger = LogManager.getLogger(AdminServiceImpl.class.getName());
 
-    // private AdminRepository adminRepository;
     private S3Service s3Service;
 
     @Autowired
@@ -30,8 +29,9 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     @SuppressWarnings({ "squid:S3457", "squid:S2629" })
     public RestApiResponse<List<LoggerDTO>> getLogs(LoggerDTO loggerDTO) {
+        List<LoggerDTO> logs = s3Service.readLogs();
 
-        return new RestApiResponse<>(null, "Log saved!", 201);
+        return new RestApiResponse<>(logs, "Log saved!", 201);
     }
 
     @Override
