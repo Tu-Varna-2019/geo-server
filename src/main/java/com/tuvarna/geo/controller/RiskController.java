@@ -16,22 +16,22 @@ import com.tuvarna.geo.entity.Soil;
 import com.tuvarna.geo.service.EarthquakeService;
 import com.tuvarna.geo.service.SoilService;
 import com.tuvarna.geo.service.dto.RestApiResponse;
-import com.tuvarna.geo.service.dto.danger.DangerDTO;
+import com.tuvarna.geo.service.dto.risk.RiskDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
-@RequestMapping("/danger")
-public class DangerController {
+@RequestMapping("/risk")
+public class RiskController {
 
-    private static final Logger logger = LogManager.getLogger(DangerController.class.getName());
+    private static final Logger logger = LogManager.getLogger(RiskController.class.getName());
     private SoilService soilService;
     private EarthquakeService earthquakeService;
 
     @Autowired
-    public DangerController(SoilService soilService, EarthquakeService earthquakeService) {
+    public RiskController(SoilService soilService, EarthquakeService earthquakeService) {
         this.soilService = soilService;
         this.earthquakeService = earthquakeService;
     }
@@ -44,10 +44,10 @@ public class DangerController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<RestApiResponse<Soil>> getSoil(@RequestBody DangerDTO dangerDTO) {
-        logger.info("Received a polypoint from client to get the corresponding soil type: {}", dangerDTO);
+    public ResponseEntity<RestApiResponse<Soil>> getSoil(@RequestBody RiskDTO riskDTO) {
+        logger.info("Received a polypoint from client to get the corresponding soil type: {}", riskDTO);
 
-        return new ResponseEntity<>(soilService.getSoil(dangerDTO), HttpStatus.OK);
+        return new ResponseEntity<>(soilService.getSoil(riskDTO), HttpStatus.OK);
     }
 
     @PostMapping("/earthquake")
@@ -58,9 +58,9 @@ public class DangerController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<RestApiResponse<Earthquake>> getEarthquake(@RequestBody DangerDTO dangerDTO) {
-        logger.info("Received a polypoint from client to get the corresponding earthquake: {}", dangerDTO);
+    public ResponseEntity<RestApiResponse<Earthquake>> getEarthquake(@RequestBody RiskDTO riskDTO) {
+        logger.info("Received a polypoint from client to get the corresponding earthquake: {}", riskDTO);
 
-        return new ResponseEntity<>(earthquakeService.getEarthquake(dangerDTO), HttpStatus.OK);
+        return new ResponseEntity<>(earthquakeService.getEarthquake(riskDTO), HttpStatus.OK);
     }
 }

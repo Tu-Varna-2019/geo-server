@@ -9,7 +9,7 @@ import com.tuvarna.geo.entity.Soil;
 import com.tuvarna.geo.exception.BadRequestError;
 import com.tuvarna.geo.repository.SoilRepository;
 import com.tuvarna.geo.service.dto.RestApiResponse;
-import com.tuvarna.geo.service.dto.danger.DangerDTO;
+import com.tuvarna.geo.service.dto.risk.RiskDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -27,16 +27,16 @@ public class SoilServiceImpl implements SoilService {
     @Override
     @Transactional
     @SuppressWarnings({ "squid:S3457", "squid:S2629" })
-    public RestApiResponse<Soil> getSoil(DangerDTO dangerDTO) {
+    public RestApiResponse<Soil> getSoil(RiskDTO riskDTO) {
 
-        Soil soilDb = soilRepository.findByLongitudeAndLatitude(dangerDTO.getLongitude(),
-                dangerDTO.getLatitude());
+        Soil soilDb = soilRepository.findByLongitudeAndLatitude(riskDTO.getLongitude(),
+                riskDTO.getLatitude());
         if (soilDb == null)
             throw new BadRequestError("Error, soil type not found!");
 
         logger.info(
                 "Soil type found from given longitude/langiude {}, {}",
-                dangerDTO.getLongitude(), dangerDTO.getLatitude());
+                riskDTO.getLongitude(), riskDTO.getLatitude());
         logger.info("Now sending soil type data with guid: {}", soilDb.getGid());
 
         return new RestApiResponse<>(soilDb, "Soil type found with gid: " + soilDb.getGid(), 201);
