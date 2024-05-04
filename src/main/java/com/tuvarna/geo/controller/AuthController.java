@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tuvarna.geo.service.UserService;
 import com.tuvarna.geo.service.dto.RestApiResponse;
-import com.tuvarna.geo.service.dto.user.LoggedInUserDTO;
-import com.tuvarna.geo.service.dto.user.LoginUserDTO;
-import com.tuvarna.geo.service.dto.user.RegisterUserDTO;
+import com.tuvarna.geo.service.dto.user.request.LoginUserDTO;
+import com.tuvarna.geo.service.dto.user.request.RegisterUserDTO;
+import com.tuvarna.geo.service.dto.user.response.LoggedInUserDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

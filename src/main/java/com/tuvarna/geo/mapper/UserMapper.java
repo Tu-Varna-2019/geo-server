@@ -6,8 +6,8 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.tuvarna.geo.entity.User;
-import com.tuvarna.geo.service.dto.user.LoginUserDTO;
-import com.tuvarna.geo.service.dto.user.RegisterUserDTO;
+import com.tuvarna.geo.service.dto.user.request.LoginUserDTO;
+import com.tuvarna.geo.service.dto.user.request.RegisterUserDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
