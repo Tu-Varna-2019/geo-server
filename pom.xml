@@ -200,6 +200,7 @@
 
 	<build>
 		<plugins>
+
 			<plugin>
 
 				<groupId>org.springframework.boot</groupId>
@@ -220,13 +221,13 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
-					<annotationProcessorPaths>
+					<!--<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
 							<version>${map-struct.version}</version>
 						</path>
-					</annotationProcessorPaths>
+					</annotationProcessorPaths>-->
 				</configuration>
 			</plugin>
 
