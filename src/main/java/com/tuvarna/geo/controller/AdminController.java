@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tuvarna.geo.service.AdminService;
 import com.tuvarna.geo.service.dto.RestApiResponse;
-import com.tuvarna.geo.service.dto.user.request.BlockUserDTO;
 import com.tuvarna.geo.service.dto.user.request.LoggerDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,10 +44,9 @@ public class AdminController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<RestApiResponse<List<LoggerDTO>>> getLogs(@RequestParam LoggerDTO loggerDTO) {
-        logger.info("Received a request from the admin to query user logs!: {}", loggerDTO);
-
-        return new ResponseEntity<>(adminService.getLogs(loggerDTO), HttpStatus.OK);
+    public ResponseEntity<RestApiResponse<List<LoggerDTO>>> getLogs() {
+        logger.info("Received a request from the admin to query user logs!");
+        return new ResponseEntity<>(adminService.getLogs(), HttpStatus.OK);
     }
 
     @PostMapping("save/log")
@@ -66,7 +63,7 @@ public class AdminController {
         return new ResponseEntity<>(adminService.saveLog(loggerDTO), HttpStatus.OK);
     }
 
-    @PutMapping("/block/user/{email}")
+    @PutMapping("users/{email}/block/{blocked}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Block user")
     @ApiResponses(value = {
@@ -74,10 +71,10 @@ public class AdminController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<RestApiResponse<Void>> blockUser(@RequestBody BlockUserDTO blockUserDTO,
-            @PathVariable("email") String email) {
-        logger.info("Received a request from the admin to block a user: {}", blockUserDTO);
+    public ResponseEntity<RestApiResponse<Void>> blockUser(
+            @PathVariable("email") String email, @PathVariable("blocked") Boolean blocked) {
+        logger.info("Received a request from the admin to block={}  a user: {}", blocked, email);
 
-        return new ResponseEntity<>(adminService.block(blockUserDTO), HttpStatus.OK);
+        return new ResponseEntity<>(adminService.block(email, blocked), HttpStatus.OK);
     }
 }

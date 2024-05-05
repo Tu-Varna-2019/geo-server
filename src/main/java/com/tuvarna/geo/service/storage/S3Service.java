@@ -14,6 +14,7 @@ import com.tuvarna.geo.config.storage.AWSConfig;
 import com.tuvarna.geo.service.dto.user.request.LoggerDTO;
 
 import io.awspring.cloud.s3.S3Exception;
+import io.awspring.cloud.s3.S3Resource;
 
 @Component
 public class S3Service {
@@ -28,7 +29,7 @@ public class S3Service {
             + "/logs.json";
 
     public void store(LoggerDTO loggerDTO) {
-        List<LoggerDTO> existingLogs = getExistingLog();
+        List<LoggerDTO> existingLogs = getLog(logPath);
         existingLogs.add(loggerDTO);
 
         awsConfig.s3Template().store(bucket,
@@ -37,13 +38,30 @@ public class S3Service {
     }
 
     @SuppressWarnings("unchecked")
-    private List<LoggerDTO> getExistingLog() {
+    private List<LoggerDTO> getLog(String objectPath) {
         try {
-            return awsConfig.s3Template().read(bucket, logPath, List.class);
+            return awsConfig.s3Template().read(bucket, objectPath, List.class);
         } catch (S3Exception err) {
             logger.warn("S3 path: {} doesn't exist. Now creating a new directory...", logPath);
             return new ArrayList<>();
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<LoggerDTO> readLogs() {
+        List<LoggerDTO> logs = new ArrayList<>();
+        try {
+            for (S3Resource s3Resource : awsConfig.s3Template().listObjects(bucket, "")) {
+                logger.info("Retrieved object from s3: {} ", s3Resource.getFilename());
+                List<LoggerDTO> fileLog = awsConfig.s3Template().read(bucket, s3Resource.getFilename(), List.class);
+
+                logs.addAll(fileLog);
+            }
+        } catch (S3Exception err) {
+            logger.warn("No S3 objects found! Moving on...");
+            return new ArrayList<>();
+        }
+        return logs;
     }
 
 }
