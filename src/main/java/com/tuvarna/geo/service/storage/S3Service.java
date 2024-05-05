@@ -28,12 +28,12 @@ public class S3Service {
     private String logPath = currentDate.getYear() + "/" + currentDate.getMonth() + "/" + currentDate.getDayOfMonth()
             + "/logs.json";
 
-    public void store(LoggerDTO loggerDTO) {
-        List<LoggerDTO> existingLogs = getLog(logPath);
+    public void store(LoggerDTO loggerDTO, String userType) {
+        List<LoggerDTO> existingLogs = getLog(userType + "/" + logPath);
         existingLogs.add(loggerDTO);
 
         awsConfig.s3Template().store(bucket,
-                logPath,
+                userType + "/" + logPath,
                 existingLogs);
     }
 
@@ -48,10 +48,10 @@ public class S3Service {
     }
 
     @SuppressWarnings("unchecked")
-    public List<LoggerDTO> readLogs() {
+    public List<LoggerDTO> readLogs(String userType) {
         List<LoggerDTO> logs = new ArrayList<>();
         try {
-            for (S3Resource s3Resource : awsConfig.s3Template().listObjects(bucket, "")) {
+            for (S3Resource s3Resource : awsConfig.s3Template().listObjects(bucket, userType)) {
                 logger.info("Retrieved object from s3: {} ", s3Resource.getFilename());
                 List<LoggerDTO> fileLog = awsConfig.s3Template().read(bucket, s3Resource.getFilename(), List.class);
 

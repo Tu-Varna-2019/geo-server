@@ -36,7 +36,7 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping("fetch/logs")
+    @GetMapping("fetch/logs/{userType}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Retrieve user logs")
     @ApiResponses(value = {
@@ -44,12 +44,12 @@ public class AdminController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<RestApiResponse<List<LoggerDTO>>> getLogs() {
+    public ResponseEntity<RestApiResponse<List<LoggerDTO>>> getLogs(@PathVariable("userType") String userType) {
         logger.info("Received a request from the admin to query user logs!");
-        return new ResponseEntity<>(adminService.getLogs(), HttpStatus.OK);
+        return new ResponseEntity<>(adminService.getLogs(userType), HttpStatus.OK);
     }
 
-    @PostMapping("save/log")
+    @PostMapping("save/log/{userType}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Save log")
     @ApiResponses(value = {
@@ -57,10 +57,11 @@ public class AdminController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<RestApiResponse<Void>> saveLog(@RequestBody LoggerDTO loggerDTO) {
+    public ResponseEntity<RestApiResponse<Void>> saveLog(@RequestBody LoggerDTO loggerDTO,
+            @PathVariable("userType") String userType) {
         logger.info("Received a log to be saved later for the admins!: {}", loggerDTO);
 
-        return new ResponseEntity<>(adminService.saveLog(loggerDTO), HttpStatus.OK);
+        return new ResponseEntity<>(adminService.saveLog(loggerDTO, userType), HttpStatus.OK);
     }
 
     @PutMapping("users/{email}/block/{blocked}")

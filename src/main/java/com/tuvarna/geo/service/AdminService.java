@@ -7,9 +7,9 @@ import com.tuvarna.geo.service.dto.user.request.LoggerDTO;
 
 public interface AdminService {
 
-    RestApiResponse<Void> saveLog(LoggerDTO loggerDTO);
+    RestApiResponse<Void> saveLog(LoggerDTO loggerDTO, String userType);
 
-    RestApiResponse<List<LoggerDTO>> getLogs();
+    RestApiResponse<List<LoggerDTO>> getLogs(String userType);
 
     RestApiResponse<Void> block(String email, Boolean blocked);
 

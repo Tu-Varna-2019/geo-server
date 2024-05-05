@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.tuvarna.geo.exception.AccessDeniedError;
 import com.tuvarna.geo.exception.BadRequestError;
@@ -35,6 +36,15 @@ public class ControllerExceptionHandler {
         RestApiResponse<Void> apiResponse = new RestApiResponse<>(null, ex.getMessage(),
                 HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<RestApiResponse<Void>> handleNoResourceFoundException(NoResourceFoundException ex,
+            WebRequest request) {
+
+        RestApiResponse<Void> apiResponse = new RestApiResponse<>(null, ex.getMessage(),
+                HttpStatus.I_AM_A_TEAPOT.value());
+        return new ResponseEntity<>(apiResponse, HttpStatus.I_AM_A_TEAPOT);
     }
 
     @ExceptionHandler(AccessDeniedError.class)

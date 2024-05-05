@@ -1,6 +1,7 @@
 package com.tuvarna.geo.service.validate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +13,15 @@ import com.tuvarna.geo.repository.UserTypeRepository;
 
 @Service
 public class UserValidateService {
+    @Value("${spring.log.forbidden.user.type}")
+    private String forbiddenUserTypeLogStore;
 
     private final UserRepository userRepository;
     private final UserTypeRepository userTypeRepository;
 
     @Autowired
-    public UserValidateService(UserRepository userRepository, UserTypeRepository userTypeRepository) {
+    public UserValidateService(UserRepository userRepository,
+            UserTypeRepository userTypeRepository) {
         this.userRepository = userRepository;
         this.userTypeRepository = userTypeRepository;
     }
@@ -50,5 +54,11 @@ public class UserValidateService {
     public UserType validateUserTypeExists(String userTypeString) {
         return userTypeRepository.findByType(userTypeString)
                 .orElseThrow(() -> new BadRequestError("UserType not found: " + userTypeString));
+    }
+
+    public void validateUseTypeExistWithoutSuperAdmin(String userType) {
+        this.validateUserTypeExists(userType);
+        if (userType.equals(forbiddenUserTypeLogStore))
+            throw new BadRequestError("UserType is prohibited: " + userType);
     }
 }
