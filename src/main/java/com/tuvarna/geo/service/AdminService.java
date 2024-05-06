@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tuvarna.geo.service.dto.RestApiResponse;
 import com.tuvarna.geo.service.dto.user.request.LoggerDTO;
+import com.tuvarna.geo.service.dto.user.response.UserInfoDTO;
 
 public interface AdminService {
 
@@ -12,5 +13,7 @@ public interface AdminService {
     RestApiResponse<List<LoggerDTO>> getLogs(String userType);
 
     RestApiResponse<Void> block(String email, Boolean blocked);
+
+    RestApiResponse<List<UserInfoDTO>> getUsers(String userType);
 
 }
