@@ -40,3 +40,4 @@ rsync -av --remove-source-files src/main/kotlin/com/tuvarna/geo/rest_api ./ && r
 ## Access the web ui
 
 - <http://localhost:8080/api.tuvarna.geo.com/v1/swagger-ui/index.html>
+

@@ -1,4 +1,4 @@
-package com.tuvarna.geo.service.dto.user;
+package com.tuvarna.geo.service.dto.user.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

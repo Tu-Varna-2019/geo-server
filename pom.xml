@@ -13,7 +13,7 @@
 	<name>geo</name>
 	<artifactId>Masters-Summer-Project-IMD-Java-WebServer-Geo-System</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<description>Tu-Varna project for for georaphic web app in Spring Boot</description>
+	<description>Tu-Varna project for georaphic web app in Spring Boot</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>com.tuvarna.geo.app.Main</start-class>
@@ -259,11 +259,35 @@
 			<type>pom</type>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-java8 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
 			<version>5.6.15.Final</version>
+		</dependency>
+
+		<!-- Storage -->
+
+		<!-- <dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.12.650</version>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-core</artifactId>
+			<version>1.12.650</version>
+		</dependency> -->
+
+		<dependency>
+			<groupId>io.awspring.cloud</groupId>
+			<artifactId>spring-cloud-aws-starter-s3</artifactId>
+			<version>3.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.14</version>
 		</dependency>
 
 

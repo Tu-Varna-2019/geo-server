@@ -17,9 +17,9 @@ import com.tuvarna.geo.mapper.UserMapper;
 import com.tuvarna.geo.repository.UserRepository;
 import com.tuvarna.geo.repository.UserTypeRepository;
 import com.tuvarna.geo.service.dto.RestApiResponse;
-import com.tuvarna.geo.service.dto.user.LoggedInUserDTO;
-import com.tuvarna.geo.service.dto.user.LoginUserDTO;
-import com.tuvarna.geo.service.dto.user.RegisterUserDTO;
+import com.tuvarna.geo.service.dto.user.request.LoginUserDTO;
+import com.tuvarna.geo.service.dto.user.request.RegisterUserDTO;
+import com.tuvarna.geo.service.dto.user.response.LoggedInUserDTO;
 import com.tuvarna.geo.service.security.JWTTokenProvider;
 import com.tuvarna.geo.service.validate.UserValidateService;
 
