@@ -45,7 +45,7 @@ class SecurityConfig {
             JwtAuthenticationFilter authenticationFilter)
             throws Exception {
         http
-                .cors().and()
+                .cors().disable()
                 .csrf().disable()
                 .addFilterBefore(authenticationFilter,
                         UsernamePasswordAuthenticationFilter.class)

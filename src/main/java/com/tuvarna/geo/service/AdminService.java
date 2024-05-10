@@ -14,6 +14,8 @@ public interface AdminService {
 
     RestApiResponse<Void> block(String email, Boolean blocked);
 
+    RestApiResponse<Void> promote(String email, String userType);
+
     RestApiResponse<List<UserInfoDTO>> getUsers(String userType);
 
 }

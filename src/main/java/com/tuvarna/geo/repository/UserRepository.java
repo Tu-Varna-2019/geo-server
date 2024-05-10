@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.tuvarna.geo.entity.User;
+import com.tuvarna.geo.entity.UserType;
 
 import jakarta.transaction.Transactional;
 
@@ -23,5 +24,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query("UPDATE User u SET u.isblocked = :isblocked WHERE u.email = :email")
     void updateIsBlockedByEmail(@Param("email") String email, @Param("isblocked") Boolean isblocked);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.usertype = :userType WHERE u.email = :email")
+    void updateTypeByUserType(@Param("email") String email, @Param("userType") UserType userType);
 
 }

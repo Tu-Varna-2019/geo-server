@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
 
     private UserRepository userRepository;
+    private UserTypeRepository userTypeRepository;
     private UserValidateService userValidateService;
     private UserMapper userMapper;
     private BCryptPasswordEncoder encodePassword;
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService {
             UserValidateService userValidateService, UserMapper userMapper, BCryptPasswordEncoder encodePassword,
             AuthenticationManager authenticationManager, JWTTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
+        this.userTypeRepository = userTypeRepository;
         this.userValidateService = userValidateService;
         this.userMapper = userMapper;
         this.encodePassword = encodePassword;
@@ -57,7 +59,9 @@ public class UserServiceImpl implements UserService {
 
         userValidateService.validateUserDoesNotExist(userDto.getEmail());
         logger.info("User does not exist with given email: " + userDto.getEmail());
-        user.setUserType(userValidateService.validateUserTypeExists(userDto.getUsertype()));
+
+        userValidateService.validateUserTypeExists(userDto.getUsertype());
+        user.setUserType(userTypeRepository.findByType(userDto.getUsertype()));
         logger.info("User type exists: " + userDto.getUsertype());
         userRepository.save(user);
 
