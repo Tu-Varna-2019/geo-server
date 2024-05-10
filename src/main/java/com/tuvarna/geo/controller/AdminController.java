@@ -81,6 +81,21 @@ public class AdminController {
         return new ResponseEntity<>(adminService.block(email, blocked), HttpStatus.OK);
     }
 
+    @PutMapping("users/{email}/promote/{userType}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Promote or denote user to admin")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User promoted/denoted!"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<RestApiResponse<Void>> promoteUser(
+            @PathVariable("email") String email, @PathVariable("userType") String userType) {
+        logger.info("Received a request from the admin to promote={}  a user: {}", userType, email);
+
+        return new ResponseEntity<>(adminService.promote(email, userType), HttpStatus.OK);
+    }
+
     @GetMapping("fetch/users/{userType}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all users")

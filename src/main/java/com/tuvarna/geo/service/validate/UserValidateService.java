@@ -51,14 +51,19 @@ public class UserValidateService {
         }
     }
 
-    public UserType validateUserTypeExists(String userTypeString) {
-        return userTypeRepository.findByType(userTypeString)
-                .orElseThrow(() -> new BadRequestError("UserType not found: " + userTypeString));
+    public void validateUserTypeExists(String userTypeString) {
+        if (userTypeRepository.findByType(userTypeString) == null)
+            throw new BadRequestError("UserType not found: " + userTypeString);
     }
 
     public void validateUseTypeExistWithoutSuperAdmin(String userType) {
         this.validateUserTypeExists(userType);
         if (userType.equals(forbiddenUserTypeLogStore))
             throw new BadRequestError("UserType is prohibited: " + userType);
+    }
+
+    public void validateEqualUserTypes(String userTypeDB, String userTypeRequest) {
+        if (userTypeDB.equals(userTypeRequest))
+            throw new BadRequestError("User is already assigned with type: " + userTypeRequest);
     }
 }
