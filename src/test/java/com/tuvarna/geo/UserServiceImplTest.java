@@ -20,13 +20,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = Main.class)
 @AutoConfigureMockMvc
-public class UserServiceImplTest {
+class UserServiceImplTest {
 
     private UserRepository userRepository;
     private UserTypeRepository userTypeRepository;
@@ -39,7 +40,6 @@ public class UserServiceImplTest {
 
     @BeforeEach
     void setup() {
-        // Initialize Mocks
         userRepository = Mockito.mock(UserRepository.class);
         userTypeRepository = Mockito.mock(UserTypeRepository.class);
         userValidateService = Mockito.mock(UserValidateService.class);
@@ -53,18 +53,19 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void whenRegisterUser_thenSuccess() {
-        RegisterUserDTO userDto = new RegisterUserDTO("junitTest1", "junitTestEmail2@example.com", "password123!",
+    void registerUserTest() {
+        RegisterUserDTO userDto = new RegisterUserDTO("dummy", "dummy", "123",
                 false, "customer");
         User user = new User();
+
         when(userMapper.toEntity(any(RegisterUserDTO.class), eq(encoder))).thenReturn(user);
         when(userRepository.save(any(User.class))).thenReturn(user);
         when(userTypeRepository.findByType(userDto.getUsertype())).thenReturn(new UserType());
 
-        RestApiResponse<Void> response = userService.registerUser(userDto); // test
+        RestApiResponse<Void> registerResponse = userService.registerUser(userDto);
 
-        assertNotNull(response);
-        assertEquals(201, response.getStatus());
+        assertNotNull(registerResponse);
+        assertEquals(201, registerResponse.getStatus());
         verify(userRepository).save(any(User.class));
     }
 }

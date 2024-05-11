@@ -22,6 +22,7 @@ import com.tuvarna.geo.app.Main;
 import com.tuvarna.geo.service.UserService;
 import com.tuvarna.geo.service.dto.RestApiResponse;
 import com.tuvarna.geo.service.dto.user.request.LoginUserDTO;
+import com.tuvarna.geo.service.dto.user.request.RegisterUserDTO;
 import com.tuvarna.geo.service.dto.user.response.LoggedInUserDTO;
 
 @ExtendWith(SpringExtension.class)
@@ -48,7 +49,20 @@ class AuthControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString((userDto)))).andExpect(status().isOk())
 				.andExpect(content().string(containsString("User logged in successfully")));
-
 	}
 
+	@Test
+	void testRegister() throws Exception {
+		RegisterUserDTO userDto = new RegisterUserDTO("username", "email@email.com", "123", false, null);
+
+		RestApiResponse<Void> expectedResult = new RestApiResponse<Void>(
+				"User registered successfully", 201);
+
+		when(userService.registerUser(userDto)).thenReturn(expectedResult);
+
+		this.mockMvc.perform(post("/auth/register")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new ObjectMapper().writeValueAsString((userDto)))).andExpect(status().isCreated())
+				.andExpect(content().string(containsString("User registered successfully")));
+	}
 }
