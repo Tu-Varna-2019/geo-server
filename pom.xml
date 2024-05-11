@@ -68,11 +68,11 @@
 			<optional>true</optional>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 			<version>${spring-boot.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -86,13 +86,6 @@
 			<version>6.1.0-M2</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate.orm</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>6.5.0.CR2</version>
-		</dependency>
-
 
 		<!-- Security -->
 
@@ -164,7 +157,7 @@
 
 
 		<!-- ApsectJ -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${aspectj.version}</version>
@@ -174,7 +167,7 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjtools</artifactId>
 			<version>${aspectj.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- Logging-->
 
@@ -212,13 +205,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<version>${spring-boot.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.jayway.restassured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>${rest.assured.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -267,17 +253,6 @@
 
 		<!-- Storage -->
 
-		<!-- <dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk</artifactId>
-			<version>1.12.650</version>
-		</dependency>
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk-core</artifactId>
-			<version>1.12.650</version>
-		</dependency> -->
-
 		<dependency>
 			<groupId>io.awspring.cloud</groupId>
 			<artifactId>spring-cloud-aws-starter-s3</artifactId>
@@ -290,11 +265,11 @@
 			<version>4.5.14</version>
 		</dependency>
 
-
 	</dependencies>
 
 
 	<build>
+
 		<plugins>
 			<plugin>
 
@@ -344,6 +319,5 @@
 
 		</plugins>
 	</build>
-
 
 </project>
