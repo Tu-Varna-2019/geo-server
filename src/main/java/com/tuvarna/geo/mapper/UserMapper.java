@@ -20,8 +20,8 @@ public interface UserMapper {
     @Mapping(target = "password", ignore = true)
     User toEntity(RegisterUserDTO userDto);
 
-    @Mapping(target = "email", source = "userDto.email")
-    @Mapping(target = "password", source = "userDto.password")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "password", source = "password")
     User toEntity(LoginUserDTO userDto);
 
     default User toEntity(RegisterUserDTO userDto, BCryptPasswordEncoder encoder) {
