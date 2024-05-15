@@ -72,7 +72,7 @@ class RiskControllerTest {
 		RiskDTO riskDTO = new RiskDTO(0.00, 0.00);
 
 		RestApiResponse<Earthquake> expectedResult = new RestApiResponse<Earthquake>(
-				"Earthquake type found with gid: ", 201);
+				"Earthquake type found with id: ", 201);
 
 		when(earthquakeService.getEarthquake(riskDTO)).thenReturn(expectedResult);
 

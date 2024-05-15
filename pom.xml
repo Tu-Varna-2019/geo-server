@@ -183,7 +183,6 @@
 			<version>${spring-boot.version}</version>
 		</dependency>
 
-
 		<!-- Swagger -->
 
 		<dependency>
@@ -198,8 +197,7 @@
 			<version>${openapi-ui.version}</version>
 		</dependency>
 
-
-		<!-- Testing-->
+		<!-- Testing -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -222,7 +220,6 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${map-struct.version}</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.mapstruct</groupId>
@@ -267,9 +264,7 @@
 
 	</dependencies>
 
-
 	<build>
-
 		<plugins>
 			<plugin>
 

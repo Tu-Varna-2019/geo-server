@@ -71,14 +71,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
-    @SuppressWarnings({ "squid:S3457", "squid:S2629" })
     public RestApiResponse<LoggedInUserDTO> login(LoginUserDTO userDto) {
-
         User user = userMapper.toEntity(userDto);
         logger.info("Mapping user DTO to entity");
         userValidateService.validateUserExists(user.getEmail());
-        logger.info("User exist with given email: " + userDto.getEmail());
+        logger.info("User exist with given email: {}", userDto.getEmail());
 
         User userFromDb = userRepository.findByEmail(user.getEmail());
         userValidateService.validatePasswordMatch(encodePassword, user.getPassword(), userFromDb.getPassword());
