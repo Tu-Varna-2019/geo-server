@@ -3,352 +3,352 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-- url: http://localhost:8080/api.tuvarna.geo.com/v1
-  description: Generated server url
+  - url: http://localhost:8080/api.tuvarna.geo.com/v1
+    description: Generated server url
 paths:
   /admin/users/{email}/promote/{userType}:
     put:
       tags:
-      - admin-controller
+        - admin-controller
       summary: Promote or denote user to admin
       operationId: promoteUser
       parameters:
-      - name: email
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: userType
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userType
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "400":
           description: Bad request
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "500":
           description: Internal server error
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "201":
           description: User promoted/denoted!
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "200":
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
   /admin/users/{email}/block/{blocked}:
     put:
       tags:
-      - admin-controller
+        - admin-controller
       summary: Block user
       operationId: blockUser
       parameters:
-      - name: email
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: blocked
-        in: path
-        required: true
-        schema:
-          type: boolean
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: blocked
+          in: path
+          required: true
+          schema:
+            type: boolean
       responses:
         "400":
           description: Bad request
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "201":
           description: User blocked!
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "500":
           description: Internal server error
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "200":
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
   /risk/soil:
     post:
       tags:
-      - risk-controller
+        - risk-controller
       summary: Retrieve soil type
       operationId: getSoil
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RiskDTO'
+              $ref: "#/components/schemas/RiskDTO"
         required: true
       responses:
         "400":
           description: Bad request
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseSoil'
+                $ref: "#/components/schemas/RestApiResponseSoil"
         "201":
           description: Soil type retrieved!
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseSoil'
+                $ref: "#/components/schemas/RestApiResponseSoil"
         "500":
           description: Internal server error
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseSoil'
+                $ref: "#/components/schemas/RestApiResponseSoil"
         "200":
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseSoil'
+                $ref: "#/components/schemas/RestApiResponseSoil"
   /risk/earthquake:
     post:
       tags:
-      - risk-controller
+        - risk-controller
       summary: Retrieve earthquake
       operationId: getEarthquake
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RiskDTO'
+              $ref: "#/components/schemas/RiskDTO"
         required: true
       responses:
         "400":
           description: Bad request
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseEarthquake'
+                $ref: "#/components/schemas/RestApiResponseEarthquake"
         "500":
           description: Internal server error
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseEarthquake'
+                $ref: "#/components/schemas/RestApiResponseEarthquake"
         "201":
           description: Earthquake retrieved!
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseEarthquake'
+                $ref: "#/components/schemas/RestApiResponseEarthquake"
         "200":
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseEarthquake'
+                $ref: "#/components/schemas/RestApiResponseEarthquake"
   /auth/register:
     post:
       tags:
-      - auth-controller
+        - auth-controller
       summary: Register a new user
       operationId: create
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterUserDTO'
+              $ref: "#/components/schemas/RegisterUserDTO"
         required: true
       responses:
         "400":
           description: Bad request
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "201":
           description: User registered successfully
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "500":
           description: Internal server error
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
   /auth/login:
     post:
       tags:
-      - auth-controller
+        - auth-controller
       summary: Logging on a new user
       operationId: login
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginUserDTO'
+              $ref: "#/components/schemas/LoginUserDTO"
         required: true
       responses:
         "400":
           description: Bad request
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseLoggedInUserDTO'
+                $ref: "#/components/schemas/RestApiResponseLoggedInUserDTO"
         "500":
           description: Internal server error
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseLoggedInUserDTO'
+                $ref: "#/components/schemas/RestApiResponseLoggedInUserDTO"
         "201":
           description: User logged in successfully
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseLoggedInUserDTO'
+                $ref: "#/components/schemas/RestApiResponseLoggedInUserDTO"
         "200":
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseLoggedInUserDTO'
+                $ref: "#/components/schemas/RestApiResponseLoggedInUserDTO"
   /admin/save/log/{userType}:
     post:
       tags:
-      - admin-controller
+        - admin-controller
       summary: Save log
       operationId: saveLog
       parameters:
-      - name: userType
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: userType
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoggerDTO'
+              $ref: "#/components/schemas/LoggerDTO"
         required: true
       responses:
         "400":
           description: Bad request
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "201":
           description: User blocked!
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "500":
           description: Internal server error
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
         "200":
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseVoid'
+                $ref: "#/components/schemas/RestApiResponseVoid"
   /admin/fetch/users/{userType}:
     get:
       tags:
-      - admin-controller
+        - admin-controller
       summary: Get all users
       operationId: getUsers
       parameters:
-      - name: userType
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: userType
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "400":
           description: Bad request
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseListUserInfoDTO'
+                $ref: "#/components/schemas/RestApiResponseListUserInfoDTO"
         "500":
           description: Internal server error
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseListUserInfoDTO'
+                $ref: "#/components/schemas/RestApiResponseListUserInfoDTO"
         "201":
           description: Users retrieved!
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseListUserInfoDTO'
+                $ref: "#/components/schemas/RestApiResponseListUserInfoDTO"
         "200":
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseListUserInfoDTO'
+                $ref: "#/components/schemas/RestApiResponseListUserInfoDTO"
   /admin/fetch/logs/{userType}:
     get:
       tags:
-      - admin-controller
+        - admin-controller
       summary: Retrieve user logs
       operationId: getLogs
       parameters:
-      - name: userType
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: userType
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "400":
           description: Bad request
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseListLoggerDTO'
+                $ref: "#/components/schemas/RestApiResponseListLoggerDTO"
         "201":
           description: Logs retrieved!
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseListLoggerDTO'
+                $ref: "#/components/schemas/RestApiResponseListLoggerDTO"
         "500":
           description: Internal server error
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseListLoggerDTO'
+                $ref: "#/components/schemas/RestApiResponseListLoggerDTO"
         "200":
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/RestApiResponseListLoggerDTO'
+                $ref: "#/components/schemas/RestApiResponseListLoggerDTO"
 components:
   schemas:
     RestApiResponseVoid:
@@ -385,7 +385,7 @@ components:
         valid:
           type: boolean
         coordinate:
-          $ref: '#/components/schemas/Coordinate'
+          $ref: "#/components/schemas/Coordinate"
         m:
           type: number
           format: double
@@ -433,9 +433,9 @@ components:
       type: object
       properties:
         envelope:
-          $ref: '#/components/schemas/Geometry'
+          $ref: "#/components/schemas/Geometry"
         factory:
-          $ref: '#/components/schemas/GeometryFactory'
+          $ref: "#/components/schemas/GeometryFactory"
         userData:
           type: object
         length:
@@ -453,13 +453,13 @@ components:
         geometryType:
           type: string
         boundary:
-          $ref: '#/components/schemas/Geometry'
+          $ref: "#/components/schemas/Geometry"
         coordinate:
-          $ref: '#/components/schemas/Coordinate'
+          $ref: "#/components/schemas/Coordinate"
         coordinates:
           type: array
           items:
-            $ref: '#/components/schemas/Coordinate'
+            $ref: "#/components/schemas/Coordinate"
         numPoints:
           type: integer
           format: int32
@@ -470,18 +470,18 @@ components:
           type: number
           format: double
         envelopeInternal:
-          $ref: '#/components/schemas/Envelope'
+          $ref: "#/components/schemas/Envelope"
         srid:
           type: integer
           format: int32
         precisionModel:
-          $ref: '#/components/schemas/PrecisionModel'
+          $ref: "#/components/schemas/PrecisionModel"
         rectangle:
           type: boolean
         centroid:
-          $ref: '#/components/schemas/Point'
+          $ref: "#/components/schemas/Point"
         interiorPoint:
-          $ref: '#/components/schemas/Point'
+          $ref: "#/components/schemas/Point"
         dimension:
           type: integer
           format: int32
@@ -489,9 +489,9 @@ components:
       type: object
       properties:
         precisionModel:
-          $ref: '#/components/schemas/PrecisionModel'
+          $ref: "#/components/schemas/PrecisionModel"
         coordinateSequenceFactory:
-          $ref: '#/components/schemas/CoordinateSequenceFactory'
+          $ref: "#/components/schemas/CoordinateSequenceFactory"
         srid:
           type: integer
           format: int32
@@ -499,9 +499,9 @@ components:
       type: object
       properties:
         envelope:
-          $ref: '#/components/schemas/Geometry'
+          $ref: "#/components/schemas/Geometry"
         factory:
-          $ref: '#/components/schemas/GeometryFactory'
+          $ref: "#/components/schemas/GeometryFactory"
         userData:
           type: object
         boundaryDimension:
@@ -510,7 +510,7 @@ components:
         geometryType:
           type: string
         boundary:
-          $ref: '#/components/schemas/Geometry'
+          $ref: "#/components/schemas/Geometry"
         dimension:
           type: integer
           format: int32
@@ -520,11 +520,11 @@ components:
         empty:
           type: boolean
         coordinate:
-          $ref: '#/components/schemas/Coordinate'
+          $ref: "#/components/schemas/Coordinate"
         coordinates:
           type: array
           items:
-            $ref: '#/components/schemas/Coordinate'
+            $ref: "#/components/schemas/Coordinate"
         numPoints:
           type: integer
           format: int32
@@ -539,35 +539,35 @@ components:
         simple:
           type: boolean
         envelopeInternal:
-          $ref: '#/components/schemas/Envelope'
+          $ref: "#/components/schemas/Envelope"
         srid:
           type: integer
           format: int32
         precisionModel:
-          $ref: '#/components/schemas/PrecisionModel'
+          $ref: "#/components/schemas/PrecisionModel"
         rectangle:
           type: boolean
         centroid:
-          $ref: '#/components/schemas/Point'
+          $ref: "#/components/schemas/Point"
         interiorPoint:
-          $ref: '#/components/schemas/Point'
+          $ref: "#/components/schemas/Point"
     Point:
       type: object
       properties:
         envelope:
-          $ref: '#/components/schemas/Geometry'
+          $ref: "#/components/schemas/Geometry"
         factory:
-          $ref: '#/components/schemas/GeometryFactory'
+          $ref: "#/components/schemas/GeometryFactory"
         userData:
           type: object
         coordinates:
           type: array
           items:
-            $ref: '#/components/schemas/Coordinate'
+            $ref: "#/components/schemas/Coordinate"
         empty:
           type: boolean
         coordinateSequence:
-          $ref: '#/components/schemas/CoordinateSequence'
+          $ref: "#/components/schemas/CoordinateSequence"
         simple:
           type: boolean
         x:
@@ -582,9 +582,9 @@ components:
         geometryType:
           type: string
         boundary:
-          $ref: '#/components/schemas/Geometry'
+          $ref: "#/components/schemas/Geometry"
         coordinate:
-          $ref: '#/components/schemas/Coordinate'
+          $ref: "#/components/schemas/Coordinate"
         numPoints:
           type: integer
           format: int32
@@ -603,18 +603,18 @@ components:
           type: number
           format: double
         envelopeInternal:
-          $ref: '#/components/schemas/Envelope'
+          $ref: "#/components/schemas/Envelope"
         srid:
           type: integer
           format: int32
         precisionModel:
-          $ref: '#/components/schemas/PrecisionModel'
+          $ref: "#/components/schemas/PrecisionModel"
         rectangle:
           type: boolean
         centroid:
-          $ref: '#/components/schemas/Point'
+          $ref: "#/components/schemas/Point"
         interiorPoint:
-          $ref: '#/components/schemas/Point'
+          $ref: "#/components/schemas/Point"
     PrecisionModel:
       type: object
       properties:
@@ -622,7 +622,7 @@ components:
           type: number
           format: double
         type:
-          $ref: '#/components/schemas/Type'
+          $ref: "#/components/schemas/Type"
         floating:
           type: boolean
         maximumSignificantDigits:
@@ -638,7 +638,7 @@ components:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/Soil'
+          $ref: "#/components/schemas/Soil"
         message:
           type: string
         status:
@@ -678,7 +678,7 @@ components:
         country:
           type: string
         geom:
-          $ref: '#/components/schemas/MultiPolygon'
+          $ref: "#/components/schemas/MultiPolygon"
     Type:
       type: object
     Earthquake:
@@ -688,7 +688,7 @@ components:
           type: integer
           format: int32
         geom:
-          $ref: '#/components/schemas/MultiPolygon'
+          $ref: "#/components/schemas/MultiPolygon"
         dn:
           type: integer
           format: int32
@@ -696,7 +696,7 @@ components:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/Earthquake'
+          $ref: "#/components/schemas/Earthquake"
         message:
           type: string
         status:
@@ -740,7 +740,7 @@ components:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/LoggedInUserDTO'
+          $ref: "#/components/schemas/LoggedInUserDTO"
         message:
           type: string
         status:
@@ -763,7 +763,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/UserInfoDTO'
+            $ref: "#/components/schemas/UserInfoDTO"
         message:
           type: string
         status:
@@ -786,7 +786,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/LoggerDTO'
+            $ref: "#/components/schemas/LoggerDTO"
         message:
           type: string
         status:
