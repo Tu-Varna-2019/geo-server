@@ -1,0 +1,15 @@
+version: "3.2"
+services:
+  geo-server:
+    image: iliyankostov/geo-server:0.0.1-RELEASE
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      AWS_REGION: eu-west-1
+    depends_on: []
+    networks:
+      - geo-network
+
+networks:
+  geo-network:
